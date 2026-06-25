@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game-Z.ir - Coming Soon</title>
+<link rel="shotcut icon" href="./pictures/logo.png" type="image/x-icon">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0d0d0d;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+    overflow:hidden;
+}
+
+.container{
+    max-width:700px;
+    padding:20px;
+}
+
+.logo{
+    width:280px;
+    margin-bottom:30px;
+    animation:float 3s ease-in-out infinite;
+}
+
+h1{
+    font-size:4rem;
+    color:#ff1f3d;
+    margin-bottom:15px;
+}
+
+p{
+    font-size:1.2rem;
+    color:#ccc;
+    margin-bottom:30px;
+}
+
+.countdown{
+    font-size:2rem;
+    font-weight:bold;
+    color:white;
+}
+
+.glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#ff1f3d;
+    filter:blur(200px);
+    opacity:0.15;
+    border-radius:50%;
+    z-index:-1;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+
+<div class="container">
+    <img src="./pictures/logo.png" alt="Game-Z Logo" class="logo">
+
+    <h1>COMING SOON</h1>
+
+    <p>
+        Game-Z.ir is preparing the latest gaming news, reviews,
+        updates and more. Stay tuned!
+    </p>
+
+    <div class="countdown" id="countdown"></div>
+</div>
+
+<script>
+const launchDate = new Date("July 29, 2026 22:30:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+</script>
+
+</body>
+</html>
