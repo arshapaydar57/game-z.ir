@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game-Z.ir | Game News</title>
+<link rel="shotcut icon" href="./pictures/logo.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Vazirmatn',sans-serif;
+}
+
+body{
+    background:#0a0a0a;
+    color:white;
+}
+
+header{
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(0,0,0,0.8);
+    border-bottom:1px solid #222;
+}
+
+.logo{
+    height:70px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#ff2323;
+}
+
+.hero{
+    min-height:85vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    background:
+    linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+    url("https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero img{
+    width:320px;
+    max-width:90%;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:700px;
+    color:#ccc;
+    line-height:1.9;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:15px 35px;
+    background:#ff1f1f;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-size:1.1rem;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#ff4040;
+    transform:translateY(-3px);
+}
+
+.servers{
+    padding:80px 8%;
+    text-align:center;
+}
+
+.servers h2{
+    margin-bottom:40px;
+    font-size:2rem;
+}
+
+.card{
+    max-width:500px;
+    margin:auto;
+    background:#111;
+    padding:30px;
+    border-radius:15px;
+    border:1px solid #222;
+    box-shadow:0 0 20px rgba(255,0,0,.15);
+}
+
+.card p{
+    color:#ccc;
+    margin-bottom:20px;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    border-top:1px solid #222;
+    color:#888;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <img src="./pictures/logo.png" class="logo" alt="Game-Z">
+    <nav>
+        <a href="#">خانه</a>
+        <a href="#servers">سرورها</a>
+        <a href="#">اخبار</a>
+        <a href="#">تماس</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <img src="./pictures/logo.png" alt="Game-Z Logo">
+
+    <h1>به Game-Z خوش آمدید</h1>
+
+    <p>
+        مرجع اخبار بازی‌های ویدیویی، معرفی سرورها و جامعه گیمرهای ایرانی.
+        آخرین اخبار، آموزش‌ها و لیست بهترین سرورهای بازی را اینجا پیدا کنید.
+    </p>
+
+    <a href="#servers" class="btn">
+        ورود به لیست سرورها
+    </a>
+</section>
+
+<section class="servers" id="servers">
+    <h2>🎮 لیست سرورها</h2>
+
+    <div class="card">
+        <p>
+            برای مشاهده سرورهای فعال و اطلاعات کامل روی دکمه زیر کلیک کنید.
+        </p>
+
+        <a href="servers.html" class="btn">
+            مشاهده سرورها
+        </a>
+    </div>
+</section>
+
+<footer>
+    © 2026 Game-Z.ir | All Rights Reserved
+</footer>
+
+</body>
+</html>
