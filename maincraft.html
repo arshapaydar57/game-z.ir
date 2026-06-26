@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game-Z | Minecraft Servers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="shotcut icon" href="./pictures/logo.png" type="image/x-icon">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Vazirmatn',sans-serif;
+}
+
+body{
+background:#0a0a0a;
+color:white;
+}
+
+header{
+position:fixed;
+top:0;
+right:0;
+width:100%;
+background:rgba(0,0,0,.9);
+backdrop-filter:blur(10px);
+border-bottom:1px solid #222;
+padding:15px 7%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+}
+
+.logo{
+height:60px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:0 15px;
+font-weight:bold;
+transition:.3s;
+}
+
+nav a:hover{
+color:#ff2020;
+}
+
+.hero{
+height:450px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding-top:80px;
+background:
+linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600');
+background-size:cover;
+background-position:center;
+}
+
+.hero h1{
+font-size:55px;
+color:#ff2020;
+margin-bottom:15px;
+}
+
+.hero p{
+color:#ccc;
+font-size:20px;
+}
+
+.search-box{
+max-width:700px;
+margin:40px auto;
+padding:0 20px;
+}
+
+.search-box input{
+width:100%;
+padding:15px;
+background:#111;
+border:1px solid #333;
+border-radius:12px;
+color:white;
+font-size:18px;
+}
+
+.servers{
+max-width:1200px;
+margin:auto;
+padding:30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+}
+
+.server{
+background:#111;
+border:1px solid #222;
+border-radius:15px;
+padding:25px;
+transition:.3s;
+}
+
+.server:hover{
+transform:translateY(-5px);
+border-color:#ff2020;
+box-shadow:0 0 25px rgba(255,0,0,.3);
+}
+
+.server h2{
+color:#ff2020;
+margin-bottom:10px;
+}
+
+.info{
+margin:10px 0;
+color:#ccc;
+}
+
+.ip{
+background:#0a0a0a;
+padding:12px;
+border-radius:10px;
+margin:15px 0;
+}
+
+button{
+background:#ff2020;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+color:white;
+cursor:pointer;
+font-weight:bold;
+transition:.3s;
+}
+
+button:hover{
+background:#d40000;
+}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:50px;
+border-top:1px solid #222;
+color:#777;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<img src="./pictures/logo.png" class="logo">
+
+<nav>
+<a href="index.html">خانه</a>
+<a href="./index.html #servers">سرورها</a>
+<a href="./index.html #contact">تماس با ما</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Minecraft Servers</h1>
+
+<p>
+بهترین سرورهای ماینکرفت ایران و جهان
+</p>
+
+</section>
+
+<div class="search-box">
+<input type="text" id="search" placeholder="جستجوی سرور...">
+</div>
+
+<div class="servers" id="servers">
+
+<div class="server">
+
+<h2>Hypixel</h2>
+
+<div class="info">⭐ امتیاز: 5.0</div>
+<div class="info">👥 بازیکنان: 42351</div>
+<div class="info">📶 پینگ: 81ms</div>
+
+<div class="ip">mc.hypixel.net</div>
+
+<button onclick="copyIP('mc.hypixel.net')">
+📋 Copy Address
+</button>
+
+</div>
+
+<div class="server">
+
+<h2>CubeCraft</h2>
+
+<div class="info">⭐ امتیاز: 4.8</div>
+<div class="info">👥 بازیکنان: 10342</div>
+<div class="info">📶 پینگ: 95ms</div>
+
+<div class="ip">play.cubecraft.net</div>
+
+<button onclick="copyIP('play.cubecraft.net')">
+📋 Copy Address
+</button>
+
+</div>
+
+<div class="server">
+
+<h2>Mineplex</h2>
+
+<div class="info">⭐ امتیاز: 4.7</div>
+<div class="info">👥 بازیکنان: 7340</div>
+<div class="info">📶 پینگ: 102ms</div>
+
+<div class="ip">us.mineplex.com</div>
+
+<button onclick="copyIP('us.mineplex.com')">
+📋 Copy Address
+</button>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 GAME-Z.IR
+</footer>
+
+<script>
+
+function copyIP(ip){
+navigator.clipboard.writeText(ip);
+alert("IP کپی شد: " + ip);
+}
+
+document.getElementById("search").addEventListener("keyup", function(){
+
+let value=this.value.toLowerCase();
+
+document.querySelectorAll(".server").forEach(server=>{
+
+server.style.display=
+server.innerText.toLowerCase().includes(value)
+? "block"
+: "none";
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

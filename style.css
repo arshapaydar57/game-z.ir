@@ -1,0 +1,20 @@
+.server-link{
+    text-decoration:none;
+    color:inherit;
+    display:block;
+}
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0a0a0a;
+    color:#fff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Vazirmatn',sans-serif;
+}
