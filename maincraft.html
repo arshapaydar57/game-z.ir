@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   Minecraft
+  </title>
+  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="./pictures/logo.png" type="image/x-icon">
+  <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Vazirmatn',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0a0a0a;
+    color:#fff;
+}
+
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:1000;
+    background:rgba(0,0,0,.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid #000000;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    height:55px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#ff1f1f;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:120px 20px 50px;
+    background:
+    linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+    url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600');
+    background-size:cover;
+    background-position:center;
+}
+
+.hero img{
+    width:300px;
+    max-width:90%;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:700px;
+    color:#ccc;
+    line-height:2;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    background:#ff1f1f;
+    color:white;
+    text-decoration:none;
+    padding:15px 35px;
+    border-radius:12px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 20px rgba(255,0,0,.5);
+}
+
+section{
+    padding:90px 8%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:2.2rem;
+}
+
+.server-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.server-card{
+    background:#111;
+    border:1px solid #222;
+    border-radius:15px;
+    padding:25px;
+    transition:.3s;
+}
+
+.server-card:hover{
+    transform:translateY(-5px);
+    border-color:#ff1f1f;
+    box-shadow:0 0 20px rgba(255,0,0,.25);
+}
+
+.server-card h3{
+    color:#ff2f2f;
+    margin-bottom:10px;
+}
+
+.server-card p{
+    color:#bbb;
+}
+
+.contact{
+    background:#080808;
+}
+
+.contact-box{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.contact-item{
+    background:#111;
+    border:1px solid #222;
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+    transition:.3s;
+}
+
+.contact-item:hover{
+    border-color:#ff1f1f;
+    box-shadow:0 0 20px rgba(255,0,0,.25);
+}
+
+.contact-item h3{
+    color:#ff2f2f;
+    margin-bottom:10px;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    border-top:1px solid #222;
+    color:#888;
+}
+
+   body{background:#0a0a0a;color:#fff;font-family:Arial;margin:0}header{background:#111;padding:20px;text-align:center}input{display:block;width:90%;margin:20px auto;padding:12px;background:#111;color:#fff;border:1px solid #333}.servers{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;padding:20px}.server{background:#111;border:1px solid #222;border-radius:12px;padding:18px}.server:hover{border-color:#f22}.ip{background:#000;padding:8px;margin:10px 0}
+button{background:#f22;color:#fff;border:none;padding:10px;border-radius:8px}
+  </style>
+
+ </head>
+ <body>
+<header>
+   
+    <img src="./pictures/logo.png" alt="Game-Z Logo" class="logo">
+
+    <nav>
+        <a href="#home">خانه</a>
+        <a href="#servers">سرورها</a>
+        <a href="#contact">تماس با ما</a>
+    </nav>
+
+  </header>
+  <input id="search" placeholder="جستجوی سرور..."/>
+  <div class="servers" id="servers">
+   <div class="server">
+    <h2>
+     Hypixel
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java
+    </div>
+    <div>
+     ⭐ 4.6
+    </div>
+    <div>
+     👥 1000
+    </div>
+    <div>
+     📶 20ms
+    </div>
+    <div class="ip">
+     mc.hypixel.net
+    </div>
+    <button onclick="copyIP('mc.hypixel.net')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     CubeCraft
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java+Bedrock
+    </div>
+    <div>
+     ⭐ 4.7
+    </div>
+    <div>
+     👥 1777
+    </div>
+    <div>
+     📶 25ms
+    </div>
+    <div class="ip">
+     play.cubecraft.net
+    </div>
+    <button onclick="copyIP('play.cubecraft.net')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     Mineplex
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java
+    </div>
+    <div>
+     ⭐ 4.8
+    </div>
+    <div>
+     👥 2554
+    </div>
+    <div>
+     📶 30ms
+    </div>
+    <div class="ip">
+     us.mineplex.com
+    </div>
+    <button onclick="copyIP('us.mineplex.com')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     PikaNetwork
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java+Bedrock
+    </div>
+    <div>
+     ⭐ 4.9
+    </div>
+    <div>
+     👥 3331
+    </div>
+    <div>
+     📶 35ms
+    </div>
+    <div class="ip">
+     play.pika-network.net
+    </div>
+    <button onclick="copyIP('play.pika-network.net')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     Jartex
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java+Bedrock
+    </div>
+    <div>
+     ⭐ 4.6
+    </div>
+    <div>
+     👥 4108
+    </div>
+    <div>
+     📶 40ms
+    </div>
+    <div class="ip">
+     play.jartexnetwork.com
+    </div>
+    <button onclick="copyIP('play.jartexnetwork.com')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     ManaCube
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java
+    </div>
+    <div>
+     ⭐ 4.7
+    </div>
+    <div>
+     👥 4885
+    </div>
+    <div>
+     📶 45ms
+    </div>
+    <div class="ip">
+     play.manacube.com
+    </div>
+    <button onclick="copyIP('play.manacube.com')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     Complex
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java
+    </div>
+    <div>
+     ⭐ 4.8
+    </div>
+    <div>
+     👥 5662
+    </div>
+    <div>
+     📶 50ms
+    </div>
+    <div class="ip">
+     hub.mc-complex.com
+    </div>
+    <button onclick="copyIP('hub.mc-complex.com')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     OPBlocks
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Java
+    </div>
+    <div>
+     ⭐ 4.9
+    </div>
+    <div>
+     👥 6439
+    </div>
+    <div>
+     📶 55ms
+    </div>
+    <div class="ip">
+     play.opblocks.com
+    </div>
+    <button onclick="copyIP('play.opblocks.com')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     NetherGames
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Bedrock
+    </div>
+    <div>
+     ⭐ 4.6
+    </div>
+    <div>
+     👥 7216
+    </div>
+    <div>
+     📶 60ms
+    </div>
+    <div class="ip">
+     play.nethergames.org
+    </div>
+    <button onclick="copyIP('play.nethergames.org')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     Lifeboat
+    </h2>
+    <div>
+     🌍 Foreign
+    </div>
+    <div>
+     💻 Bedrock
+    </div>
+    <div>
+     ⭐ 4.7
+    </div>
+    <div>
+     👥 7993
+    </div>
+    <div>
+     📶 65ms
+    </div>
+    <div class="ip">
+     play.lbsg.net
+    </div>
+    <button onclick="copyIP('play.lbsg.net')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     DragonCraft IR
+    </h2>
+    <div>
+     🌍 Iran
+    </div>
+    <div>
+     💻 Java+Bedrock
+    </div>
+    <div>
+     ⭐ 4.8
+    </div>
+    <div>
+     👥 8770
+    </div>
+    <div>
+     📶 70ms
+    </div>
+    <div class="ip">
+     play.dragoncraft.ir
+    </div>
+    <button onclick="copyIP('play.dragoncraft.ir')">
+     Copy Address
+    </button>
+   </div>
+   <div class="server">
+    <h2>
+     Rinaorc
+    </h2>
+    <div>
+     🌍 Iran
+    </div>
+    <div>
+     💻 Java
+    </div>
+    <div>
+     ⭐ 4.9
+    </div>
+    <div>
+     👥 9547
+    </div>
+    <div>
+     📶 75ms
+    </div>
+    <div class="ip">
+     play.rinaorc.com
+    </div>
+    <button onclick="copyIP('play.rinaorc.com')">
+     Copy Address
+    </button>
+   </div>
+  </div>
+  <script>
+   function copyIP(ip){navigator.clipboard.writeText(ip);alert('Copied: '+ip);}
+search.onkeyup=function(){let v=this.value.toLowerCase();document.querySelectorAll('.server').forEach(s=>s.style.display=s.innerText.toLowerCase().includes(v)?'block':'none');}
+  </script>
+  <footer>
+    © 2026 GAME-Z.IR - All Rights Reserved
+</footer>
+<footer>
+    Made by Arsha_pm
+</footer>
+ </body>
+</html>
