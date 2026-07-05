@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAME-Z | GTA VI Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="shortcut icon" href="./pictures/logo daiere.png" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ---- Animated gradient background ---- */
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(-45deg, #1a0033, #4a0a4a, #8a2d88, #ff6a3d, #ff1f3d);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ---- Particles overlay ---- */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ---- Sun glow ---- */
+    .sun-glow {
+      position: fixed;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 200, 80, 0.3), rgba(255, 100, 150, 0.1), transparent 70%);
+      filter: blur(60px);
+      z-index: 1;
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+      50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+    }
+
+    /* ---- Card ---- */
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(900px, 92%);
+      padding: 50px 40px;
+      border-radius: 40px;
+      background: rgba(10, 10, 20, 0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 80px rgba(255, 0, 60, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      text-align: center;
+      color: #fff;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .logo {
+      width: 200px;
+      max-width: 70%;
+      margin-bottom: 20px;
+      animation: floatLogo 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(255, 80, 150, 0.4));
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    h1 {
+      font: 900 68px 'Orbitron', sans-serif;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, #ff4aa2, #ff9349, #ff1f3d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 60px rgba(255, 80, 150, 0.2);
+      margin-bottom: 6px;
+    }
+
+    .sub {
+      font-size: 1.1rem;
+      color: #e0c0e0;
+      margin-bottom: 35px;
+      letter-spacing: 2px;
+    }
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    .box {
+      width: 130px;
+      padding: 20px 10px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 100, 200, 0.2);
+      border-radius: 24px;
+      box-shadow: 0 0 30px rgba(255, 0, 100, 0.1);
+      transition: 0.3s;
+    }
+
+    .box:hover {
+      border-color: #ff4aa2;
+      box-shadow: 0 0 40px rgba(255, 0, 100, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .num {
+      font: 700 48px 'Orbitron', monospace;
+      background: linear-gradient(135deg, #ff4aa2, #ff9349);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lbl {
+      color: #d4a0d4;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-home {
+      display: inline-block;
+      padding: 16px 40px;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #ff4aa2, #ff9349);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      transition: 0.3s;
+      box-shadow: 0 0 30px rgba(255, 80, 150, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-home:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 0 50px rgba(255, 80, 150, 0.5), 0 0 100px rgba(255, 50, 100, 0.15);
+    }
+
+    .btn-home i {
+      margin-left: 10px;
+    }
+
+    /* ---- responsive ---- */
+    @media (max-width: 600px) {
+      .card { padding: 30px 18px; }
+      h1 { font-size: 36px; letter-spacing: 3px; }
+      .num { font-size: 32px; }
+      .box { width: 80px; padding: 14px 6px; }
+      .logo { width: 130px; }
+    }
+
+    @media (max-width: 400px) {
+      .box { width: 68px; }
+      .num { font-size: 26px; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-gradient"></div>
+  <div class="sun-glow"></div>
+
+  <!-- Particles -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Main Card -->
+  <div class="card">
+    <img src="./pictures/gta6 logo.png" class="logo" alt="GTA VI Logo">
+
+    <h1>COMING SOON</h1>
+    <div class="sub">🎮 The next level of GTA is almost here.</div>
+
+    <div class="timer">
+      <div class="box">
+        <div class="num" id="days">0</div>
+        <div class="lbl">DAYS</div>
+      </div>
+      <div class="box">
+        <div class="num" id="hours">0</div>
+        <div class="lbl">HOURS</div>
+      </div>
+      <div class="box">
+        <div class="num" id="minutes">0</div>
+        <div class="lbl">MINUTES</div>
+      </div>
+      <div class="box">
+        <div class="num" id="seconds">0</div>
+        <div class="lbl">SECONDS</div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <a href="index.html" class="btn-home">
+        <i class="fas fa-home"></i> بازگشت به خانه
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // ---- Countdown ----
+    const target = new Date("2026-10-19T22:30:00").getTime();
+
+    function updateTimer() {
+      const now = Date.now();
+      const diff = Math.max(0, target - now);
+
+      document.getElementById('days').textContent = Math.floor(diff / 86400000);
+      document.getElementById('hours').textContent = Math.floor((diff % 86400000) / 3600000);
+      document.getElementById('minutes').textContent = Math.floor((diff % 3600000) / 60000);
+      document.getElementById('seconds').textContent = Math.floor((diff % 60000) / 1000);
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // ---- Particles ----
+    (function() {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h;
+      const particles = [];
+      const COUNT = 80;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      class Particle {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
+          this.size = Math.random() * 2.8 + 0.8;
+          this.speedX = (Math.random() - 0.5) * 0.6;
+          this.speedY = (Math.random() - 0.5) * 0.6;
+          this.opacity = Math.random() * 0.5 + 0.2;
+          const hue = Math.random() * 60 + 300; // pink-purple range
+          this.color = `hsla(${hue}, 90%, 65%, ${this.opacity})`;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > w) this.speedX *= -1;
+          if (this.y < 0 || this.y > h) this.speedY *= -1;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.shadowColor = 'rgba(255, 80, 200, 0.4)';
+          ctx.shadowBlur = 16;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+      function animate() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => { p.update(); p.draw(); });
+
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 150) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(200, 80, 255, ${0.12 * (1 - dist/150)})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+</body>
+</html>
