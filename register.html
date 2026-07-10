@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game-Z | ثبت‌نام</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="shortcut icon" href="./pictures/logo daiere.png" type="image/x-icon"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+    body { background: #0A0A0A; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .auth-container {
+      position: relative;
+      z-index: 2;
+      width: min(420px, 92%);
+      padding: 40px 30px;
+      background: rgba(18, 12, 28, 0.6);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 45, 85, 0.08);
+      border-radius: 30px;
+      box-shadow: 0 0 60px rgba(255, 45, 85, 0.05);
+    }
+    .auth-container .logo {
+      display: block;
+      width: 120px;
+      margin: 0 auto 18px;
+      filter: drop-shadow(0 0 20px rgba(255, 45, 85, 0.2));
+    }
+    .auth-container h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .auth-container .sub {
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.04);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      margin-bottom: 12px;
+      transition: 0.3s;
+    }
+    .auth-form input:focus {
+      border-color: #FF2D55;
+      box-shadow: 0 0 20px rgba(255, 45, 85, 0.05);
+    }
+    .auth-form input::placeholder { color: #666; }
+
+    .auth-form button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .auth-form button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(255, 45, 85, 0.2);
+    }
+
+    .auth-links {
+      text-align: center;
+      margin-top: 15px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+    .auth-links a {
+      color: #8B5CF6;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .auth-links a:hover { color: #FF2D55; }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #666;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .back-home:hover { color: #aaa; }
+
+    @media (max-width: 480px) {
+      .auth-container { padding: 30px 20px; }
+      .auth-container h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <div class="auth-container">
+    <img src="./pictures/logo daiere.png" alt="Game-Z" class="logo" />
+    <h1>ثبت‌نام</h1>
+    <div class="sub">به جمع گیم‌رها بپیوندید 🎮</div>
+
+    <!-- ===== تغییر: id="registerForm" ===== -->
+    <form class="auth-form" id="registerForm">
+      <input type="text" placeholder="👤 نام کاربری" id="regUser" required />
+      <input type="email" placeholder="📧 ایمیل" id="regEmail" required />
+      <input type="password" placeholder="🔒 رمز عبور" id="regPass" required minlength="6" />
+      <input type="password" placeholder="🔒 تکرار رمز عبور" id="regPass2" required />
+      <button type="submit"><i class="fas fa-user-plus"></i> ثبت‌نام</button>
+    </form>
+
+    <div class="auth-links">
+      قبلاً ثبت‌نام کردید؟ <a href="login.html">ورود</a>
+    </div>
+    <a href="index.html" class="back-home"><i class="fas fa-arrow-right"></i> بازگشت به خانه</a>
+  </div> 
+  <script src="script.js"></script>
+</body>
+</html>

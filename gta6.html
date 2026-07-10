@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GAME-Z | GTA VI Coming Soon</title>
+  <meta name="description" content="روزشمار انتشار بازی GTA 6"/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Orbitron:wght@700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="shortcut icon" href="./pictures/logo daiere.png" type="image/x-icon"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(-45deg, #1a0033, #4a0a4a, #8a2d88, #ff6a3d, #FF2D55);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .sun-glow {
+      position: fixed;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 200, 80, 0.3), rgba(255, 45, 85, 0.1), transparent 70%);
+      filter: blur(60px);
+      z-index: 1;
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+      50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+    }
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(900px, 92%);
+      padding: 45px 35px;
+      border-radius: 40px;
+      background: rgba(10, 10, 20, 0.55);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 80px rgba(255, 45, 85, 0.08);
+      text-align: center;
+      color: #fff;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .logo {
+      width: 200px;
+      max-width: 70%;
+      margin-bottom: 16px;
+      animation: floatLogo 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(255, 45, 85, 0.3));
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    h1 {
+      font: 900 56px 'Orbitron', sans-serif;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+    .sub {
+      font-size: 1rem;
+      color: #d0b0d0;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .box {
+      width: 120px;
+      padding: 18px 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 45, 85, 0.15);
+      border-radius: 22px;
+      transition: 0.3s;
+    }
+    .box:hover {
+      border-color: #FF2D55;
+      box-shadow: 0 0 30px rgba(255, 45, 85, 0.15);
+      transform: translateY(-2px);
+    }
+    .num {
+      font: 700 40px 'Orbitron', monospace;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .lbl {
+      color: #b080b0;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+    .btn-home {
+      display: inline-block;
+      padding: 14px 35px;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: 0.3s;
+      box-shadow: 0 0 25px rgba(255, 45, 85, 0.2);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .btn-home:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 0 45px rgba(255, 45, 85, 0.4);
+    }
+    .btn-home i { margin-left: 8px; }
+
+    @media (max-width: 600px) {
+      .card { padding: 25px 16px; }
+      h1 { font-size: 30px; letter-spacing: 2px; }
+      .num { font-size: 28px; }
+      .box { width: 72px; padding: 12px 6px; }
+      .logo { width: 130px; }
+    }
+    @media (max-width: 400px) {
+      .box { width: 62px; }
+      .num { font-size: 22px; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-gradient"></div>
+  <div class="sun-glow"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <div class="card">
+    <img src="./pictures/gta6 logo.png" class="logo" alt="GTA VI Logo" />
+    <h1>COMING SOON</h1>
+    <div class="sub">🎮 The next level of GTA is almost here.</div>
+    <div class="timer">
+      <div class="box"><div class="num" id="days">0</div><div class="lbl">DAY</div></div>
+      <div class="box"><div class="num" id="hours">0</div><div class="lbl">HOUR</div></div>
+      <div class="box"><div class="num" id="minutes">0</div><div class="lbl">MIN</div></div>
+      <div class="box"><div class="num" id="seconds">0</div><div class="lbl">SEC</div></div>
+    </div>
+    <a href="index.html" class="btn-home"><i class="fas fa-home"></i> بازگشت به خانه</a>
+  </div>
+
+  <script>
+    const target = new Date("2026-10-19T22:30:00").getTime();
+    function updateTimer() {
+      const diff = Math.max(0, target - Date.now());
+      document.getElementById('days').textContent = Math.floor(diff / 86400000);
+      document.getElementById('hours').textContent = Math.floor((diff % 86400000) / 3600000);
+      document.getElementById('minutes').textContent = Math.floor((diff % 3600000) / 60000);
+      document.getElementById('seconds').textContent = Math.floor((diff % 60000) / 1000);
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // ===== PARTICLES =====
+    (function() {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h;
+      const particles = [];
+      const COUNT = 70;
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      class Particle {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
+          this.size = Math.random() * 2.6 + 0.6;
+          this.speedX = (Math.random() - 0.5) * 0.5;
+          this.speedY = (Math.random() - 0.5) * 0.5;
+          this.opacity = Math.random() * 0.4 + 0.15;
+          const hue = Math.random() * 60 + 300;
+          this.color = `hsla(${hue}, 90%, 65%, ${this.opacity})`;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > w) this.speedX *= -1;
+          if (this.y < 0 || this.y > h) this.speedY *= -1;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.shadowColor = 'rgba(255, 45, 85, 0.3)';
+          ctx.shadowBlur = 14;
+          ctx.fill();
+        }
+      }
+      for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+      function animate() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => { p.update(); p.draw(); });
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 140) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(139, 92, 246, ${0.08 * (1 - dist/140)})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+</body>
+</html>

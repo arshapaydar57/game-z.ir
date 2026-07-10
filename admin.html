@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game-Z | پنل مدیریت</title>
+  <meta name="description" content="پنل مدیریت سرورها، نظرات و کاربران"/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="shortcut icon" href="./pictures/logo daiere.png" type="image/x-icon"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+    body { background: #0A0A0A; color: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 45, 85, 0.12);
+      padding: 12px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    header.shrink { padding: 8px 8%; background: rgba(0, 0, 0, 0.92); }
+    .logo { height: 44px; transition: 0.3s; filter: drop-shadow(0 0 12px rgba(255, 45, 85, 0.2)); }
+    header.shrink .logo { height: 34px; }
+
+    nav { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    nav a { color: #d0d0d0; font-weight: 600; font-size: 0.9rem; transition: 0.3s; position: relative; white-space: nowrap; }
+    nav a::after {
+      content: ''; position: absolute; bottom: -4px; right: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, #FF2D55, #8B5CF6);
+      transition: 0.3s;
+    }
+    nav a:hover { color: #FF2D55; }
+    nav a:hover::after { width: 100%; }
+    .menu-toggle { display: none; font-size: 1.5rem; color: #fff; background: none; border: none; cursor: pointer; }
+    .admin-badge {
+      background: rgba(255, 45, 85, 0.15);
+      color: #FF2D55;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .admin-hero {
+      position: relative;
+      z-index: 2;
+      padding: 120px 8% 30px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 30%, rgba(255, 45, 85, 0.05), transparent 70%);
+    }
+    .admin-hero h1 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .admin-hero p { color: #aaa; font-size: 1rem; margin-top: 6px; }
+
+    .admin-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 8% 70px;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    .admin-stats .stat {
+      background: rgba(18, 12, 28, 0.5);
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+    }
+    .admin-stats .stat .num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FF2D55;
+    }
+    .admin-stats .stat .label {
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    .admin-panel {
+      background: rgba(18, 12, 28, 0.5);
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 24px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+    .admin-panel h2 {
+      color: #FF2D55;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .admin-table th {
+      text-align: right;
+      padding: 10px 12px;
+      color: #888;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-weight: 700;
+    }
+    .admin-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      color: #ccc;
+    }
+    .admin-table .actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .admin-table .actions button {
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.7rem;
+      transition: 0.3s;
+    }
+    .admin-table .actions .edit {
+      background: rgba(139, 92, 246, 0.2);
+      color: #8B5CF6;
+    }
+    .admin-table .actions .delete {
+      background: rgba(255, 45, 85, 0.2);
+      color: #FF2D55;
+    }
+    .admin-table .actions .approve {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+    .admin-table .actions .reject {
+      background: rgba(255, 45, 85, 0.15);
+      color: #FF2D55;
+    }
+    .admin-table .actions button:hover { transform: scale(1.05); }
+
+    .admin-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .admin-form input, .admin-form select {
+      padding: 10px 16px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.04);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .admin-form input:focus, .admin-form select:focus {
+      border-color: #FF2D55;
+    }
+    .admin-form button {
+      padding: 10px 20px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .admin-form button:hover { transform: scale(1.03); }
+
+    .back-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.05);
+      color: #ccc;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: 0.3s;
+      font-weight: 700;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+    .empty-msg {
+      text-align: center;
+      color: #666;
+      padding: 20px;
+    }
+    .status-pending { color: #fbbf24; }
+    .status-approved { color: #22c55e; }
+    .status-rejected { color: #ff4444; }
+
+    .logout-btn {
+      background: rgba(255, 45, 85, 0.1);
+      color: #FF2D55;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 45, 85, 0.15);
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .logout-btn:hover {
+      background: rgba(255, 45, 85, 0.2);
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 25px 20px 18px;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      background: rgba(0, 0, 0, 0.4);
+      color: #555;
+      font-size: 0.8rem;
+    }
+    footer .footer-icons { display: flex; justify-content: center; gap: 18px; margin-top: 6px; }
+    footer .footer-icons a { color: #444; font-size: 1.3rem; transition: 0.3s; }
+    footer .footer-icons a:hover { color: #FF2D55; transform: scale(1.15); }
+
+    @media (max-width: 768px) {
+      header { padding: 10px 5%; }
+      .logo { height: 36px; }
+      .menu-toggle { display: block; }
+      nav { display: none; flex-direction: column; width: 100%; padding-top: 10px; gap: 8px; }
+      nav.open { display: flex; }
+      nav a { font-size: 0.85rem; }
+      .admin-hero h1 { font-size: 1.8rem; }
+      .admin-table { font-size: 0.7rem; }
+      .admin-table th, .admin-table td { padding: 5px 6px; }
+      .admin-form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+   <!-- ===== چک کردن لاگین ===== -->
+  <script>
+    const currentUser = localStorage.getItem('gamez_current_user');
+    if (!currentUser) {
+      alert('❌ لطفاً ابتدا وارد شوید!');
+      window.location.href = 'login.html';
+    } else if (currentUser !== 'admin') {
+      alert('⛔ شما دسترسی ادمین ندارید!');
+      window.location.href = 'index.html';
+    }
+  </script>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <header id="mainHeader">
+    <img src="./pictures/logo daiere.png" alt="Game-Z" class="logo" />
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+    <nav id="mainNav">
+      <a href="index.html"><i class="fas fa-home"></i> خانه</a>
+      <a href="maincraft.html"><i class="fas fa-cube"></i> سرورها</a>
+      <a href="gta6.html"><i class="fas fa-clock"></i> GTA 6</a>
+      <a href="index.html#contact"><i class="fas fa-envelope"></i> تماس</a>
+      <span class="admin-badge">🔐 ادمین</span>
+      <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+    </nav>
+  </header>
+
+  <section class="admin-hero">
+    <h1>🔐 پنل مدیریت</h1>
+    <p>مدیریت سرورها، نظرات و کاربران</p>
+  </section>
+
+  <div class="admin-container">
+    <!-- ===== STATS ===== -->
+    <div class="admin-stats">
+      <div class="stat"><div class="num" id="totalServers">۰</div><div class="label">📋 کل سرورها</div></div>
+      <div class="stat"><div class="num" id="activeServers">۰</div><div class="label">🟢 سرور فعال</div></div>
+      <div class="stat"><div class="num" id="pendingComments">۰</div><div class="label">⏳ نظرات در انتظار</div></div>
+      <div class="stat"><div class="num" id="totalComments">۰</div><div class="label">💬 کل نظرات</div></div>
+      <div class="stat"><div class="num" id="totalUsers">۰</div><div class="label">👥 کاربران</div></div>
+    </div>
+
+    <!-- ===== ADD SERVER ===== -->
+    <div class="admin-panel">
+  <h2><i class="fas fa-plus-circle"></i> افزودن سرور جدید</h2>
+  <div class="admin-form">
+    <input type="text" placeholder="🏷️ نام سرور" id="newName" />
+    <input type="text" placeholder="🌍 منطقه (ایران/خارجی)" id="newRegion" />
+    <input type="text" placeholder="🎮 نسخه" id="newVersion" />
+    <input type="text" placeholder="📡 آی‌پی" id="newIp" />
+    <input type="text" placeholder="👥 تعداد بازیکنان" id="newPlayers" />
+    <input type="text" placeholder="⭐ امتیاز (مثلاً 4.8)" id="newRating" value="4.5" />
+    <select id="newGame">
+      <option value="ماینکرفت">⛏️ ماینکرفت</option>
+      <option value="CS2">🔫 CS2</option>
+      <option value="CS 1.6">💥 CS 1.6</option>
+      <option value="Rust">🛡️ Rust</option>
+    </select>
+    <button onclick="addServer()"><i class="fas fa-save"></i> افزودن سرور</button>
+  </div>
+</div>
+
+    <!-- ===== PENDING COMMENTS ===== -->
+    <div class="admin-panel" id="pendingPanel">
+      <h2><i class="fas fa-clock"></i> نظرات در انتظار تایید</h2>
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>کاربر</th>
+              <th>نظر</th>
+              <th>سرور</th>
+              <th>تاریخ</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="pendingCommentsBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== ALL COMMENTS ===== -->
+    <div class="admin-panel">
+      <h2><i class="fas fa-comments"></i> همه نظرات</h2>
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>کاربر</th>
+              <th>نظر</th>
+              <th>سرور</th>
+              <th>تاریخ</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="allCommentsBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== ALL SERVERS ===== -->
+    <div class="admin-panel">
+      <h2><i class="fas fa-server"></i> لیست همه سرورها</h2>
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>نام</th>
+              <th>بازی</th>
+              <th>منطقه</th>
+              <th>بازیکنان</th>
+              <th>امتیاز</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="serverTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== USERS ===== -->
+    <div class="admin-panel">
+      <h2><i class="fas fa-users"></i> کاربران ثبت‌نام شده</h2>
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>نام کاربری</th>
+              <th>ایمیل</th>
+              <th>تاریخ ثبت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> بازگشت به خانه</a>
+    </div>
+  </div>
+
+  <footer>
+    <div>© 2026 GAME-Z.IR | تمامی حقوق محفوظ است</div>
+    <div style="color:#444;font-size:0.7rem;">طراحی توسط Arsha_pm</div>
+    <div class="footer-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
