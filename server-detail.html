@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game-Z | جزئیات سرور</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="shortcut icon" href="./pictures/logo daiere.png" type="image/x-icon"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #0A0A0A; color: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 45, 85, 0.08);
+      padding: 14px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    header.shrink { padding: 8px 8%; background: rgba(0, 0, 0, 0.95); }
+    .logo { height: 46px; transition: 0.3s; filter: drop-shadow(0 0 20px rgba(255, 45, 85, 0.15)); }
+    header.shrink .logo { height: 36px; }
+
+    nav { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+    nav a { color: #c8c8c8; font-weight: 600; font-size: 0.9rem; transition: 0.3s; position: relative; white-space: nowrap; padding: 4px 0; }
+    nav a::after {
+      content: ''; position: absolute; bottom: -2px; right: 0;
+      width: 0; height: 2.5px;
+      background: linear-gradient(90deg, #FF2D55, #8B5CF6);
+      transition: 0.3s ease;
+      border-radius: 2px;
+    }
+    nav a:hover { color: #FF2D55; }
+    nav a:hover::after { width: 100%; }
+    .menu-toggle { display: none; font-size: 1.5rem; color: #fff; background: none; border: none; cursor: pointer; }
+
+    .detail-hero {
+      position: relative;
+      z-index: 2;
+      padding: 140px 8% 30px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 30%, rgba(139, 92, 246, 0.04), transparent 70%);
+    }
+    .detail-hero h1 {
+      font-size: 2.6rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .detail-hero p { color: #aaa; font-size: 1rem; margin-top: 6px; }
+
+    .detail-container {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 8% 70px;
+    }
+
+    .detail-card {
+      background: rgba(18, 12, 28, 0.6);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 28px;
+      padding: 38px 32px;
+      margin-bottom: 32px;
+      transition: 0.3s;
+    }
+    .detail-card:hover { border-color: rgba(255, 45, 85, 0.06); }
+
+    .detail-card .server-name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .detail-card .server-name h2 {
+      font-size: 2rem;
+      color: #FF2D55;
+      font-weight: 900;
+    }
+    .detail-card .server-name .badge {
+      background: rgba(34, 197, 94, 0.12);
+      color: #22c55e;
+      padding: 5px 18px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid rgba(34, 197, 94, 0.08);
+    }
+
+    .detail-card .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 16px;
+      margin: 18px 0 22px;
+    }
+    .detail-card .info-grid .item {
+      background: rgba(0,0,0,0.3);
+      border-radius: 18px;
+      padding: 14px 18px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .detail-card .info-grid .item .label {
+      color: #888;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .detail-card .info-grid .item .value {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 3px;
+    }
+
+    .detail-card .ip-box {
+      background: rgba(0,0,0,0.4);
+      padding: 16px 22px;
+      border-radius: 40px;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      color: #b0b0ff;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.04);
+      margin: 16px 0;
+      direction: ltr;
+      letter-spacing: 0.5px;
+    }
+    .detail-card .copy-big {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .detail-card .copy-big:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 35px rgba(255, 45, 85, 0.25);
+    }
+
+    .detail-card .rating-area {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .detail-card .rating-area .stars {
+      color: #fbbf24;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+    }
+    .detail-card .rating-area .vote-btn {
+      padding: 7px 22px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 30px;
+      color: #aaa;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .detail-card .rating-area .vote-btn:hover {
+      background: rgba(255, 45, 85, 0.08);
+      border-color: #FF2D55;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .comments-section {
+      background: rgba(18, 12, 28, 0.4);
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 28px;
+      padding: 32px 30px;
+      transition: 0.3s;
+    }
+    .comments-section:hover { border-color: rgba(255, 45, 85, 0.05); }
+    .comments-section h3 {
+      color: #FF2D55;
+      font-size: 1.3rem;
+      margin-bottom: 18px;
+      font-weight: 900;
+    }
+    .comment {
+      background: rgba(0,0,0,0.2);
+      border-radius: 18px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .comment .user {
+      color: #8B5CF6;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .comment .text {
+      color: #ccc;
+      font-size: 0.9rem;
+      margin-top: 4px;
+      line-height: 1.7;
+    }
+    .comment .date {
+      color: #666;
+      font-size: 0.7rem;
+      margin-top: 4px;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .comment-form input {
+      flex: 1;
+      padding: 13px 20px;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.04);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 140px;
+      transition: 0.3s;
+    }
+    .comment-form input:focus {
+      border-color: #FF2D55;
+      box-shadow: 0 0 20px rgba(255, 45, 85, 0.05);
+    }
+    .comment-form input::placeholder { color: #666; }
+    .comment-form button {
+      padding: 13px 32px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #FF2D55, #8B5CF6);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.9rem;
+    }
+    .comment-form button:hover { transform: scale(1.04); box-shadow: 0 4px 25px rgba(255, 45, 85, 0.2); }
+
+    .back-btn {
+      display: inline-block;
+      padding: 14px 34px;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.04);
+      color: #ccc;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: 0.3s;
+      font-weight: 700;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 35px 20px 28px;
+      border-top: 1px solid rgba(255,255,255,0.03);
+      background: rgba(0, 0, 0, 0.5);
+      color: #555;
+      font-size: 0.8rem;
+    }
+    footer .footer-icons { display: flex; justify-content: center; gap: 22px; margin-top: 10px; }
+    footer .footer-icons a { color: #444; font-size: 1.4rem; transition: 0.3s; }
+    footer .footer-icons a:hover { color: #FF2D55; transform: scale(1.15) translateY(-3px); }
+
+    @media (max-width: 768px) {
+      header { padding: 12px 5%; }
+      .logo { height: 38px; }
+      .menu-toggle { display: block; }
+      nav { display: none; flex-direction: column; width: 100%; padding-top: 14px; gap: 10px; align-items: stretch; }
+      nav.open { display: flex; }
+      nav a { font-size: 0.85rem; padding: 6px 0; }
+      .detail-hero h1 { font-size: 2rem; }
+      .detail-container { padding: 20px 5% 50px; }
+      .detail-card { padding: 24px 20px; }
+      .detail-card .info-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .comments-section { padding: 24px 18px; }
+    }
+    @media (max-width: 480px) {
+      .detail-hero h1 { font-size: 1.6rem; }
+      .detail-card .server-name h2 { font-size: 1.5rem; }
+      .detail-card .info-grid { grid-template-columns: 1fr; }
+      .comment-form { flex-direction: column; }
+      .comment-form input { width: 100%; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <header id="mainHeader">
+    <img src="./pictures/logo daiere.png" alt="Game-Z" class="logo" />
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+    <nav id="mainNav">
+      <a href="index.html"><i class="fas fa-home"></i> خانه</a>
+      <a href="maincraft.html"><i class="fas fa-cube"></i> ماینکرفت</a>
+      <a href="cs2.html"><i class="fas fa-crosshairs"></i> CS2</a>
+      <a href="cs16.html"><i class="fas fa-bolt"></i> CS 1.6</a>
+      <a href="rust.html"><i class="fas fa-shield"></i> Rust</a>
+    </nav>
+  </header>
+
+  <section class="detail-hero">
+    <h1 id="serverTitle">🐉 DragonCraft IR</h1>
+    <p id="serverSub">اطلاعات کامل سرور، آمار، نظرات و امتیازات</p>
+  </section>
+
+  <div class="detail-container">
+    <div class="detail-card reveal">
+      <div class="server-name">
+        <h2 id="detailName">DragonCraft IR</h2>
+        <span class="badge"><i class="fas fa-circle" style="font-size:0.4rem;"></i> آنلاین</span>
+      </div>
+
+      <div class="info-grid">
+        <div class="item"><div class="label">🌍 منطقه</div><div class="value" id="region">ایران</div></div>
+        <div class="item"><div class="label">🎮 نسخه</div><div class="value" id="version">Java+Bedrock</div></div>
+        <div class="item"><div class="label">👥 بازیکنان</div><div class="value" id="players">8,770+</div></div>
+        <div class="item"><div class="label">📡 پینگ</div><div class="value" id="ping">70ms</div></div>
+        <div class="item"><div class="label">⭐ امتیاز</div><div class="value" id="rating">4.8</div></div>
+        <div class="item"><div class="label">📅 وایپ</div><div class="value" id="wipe">هر ۷ روز</div></div>
+      </div>
+
+      <div class="ip-box" id="ipBox">play.dragoncraft.ir</div>
+      <button class="copy-big" onclick="copyIP()"><i class="fas fa-copy"></i> کپی آدرس سرور</button>
+
+      <div class="rating-area">
+        <div class="stars" id="starsDisplay">★★★★★</div>
+        <span style="color:#aaa;font-size:0.9rem;" id="ratingCount">(۱,۲۳۴ رأی)</span>
+        <button class="vote-btn" onclick="vote()"><i class="fas fa-thumbs-up"></i> امتیاز بده</button>
+        <button class="vote-btn" onclick="like()"><i class="fas fa-heart"></i> ❤️ <span id="likeCount">۴۵۶</span></button>
+      </div>
+    </div>
+
+    <div class="comments-section reveal">
+      <h3><i class="fas fa-comments"></i> نظرات کاربران</h3>
+      <div id="commentsList">
+        <div class="comment">
+          <div class="user">Arsha_pm</div>
+          <div class="text">🔥 بهترین سرور ماینکرفت ایران! پینگ عالی و جامعه فعال</div>
+          <div class="date">۲ روز پیش</div>
+        </div>
+        <div class="comment">
+          <div class="user">Reza_Gamer</div>
+          <div class="text">منتظر وایپ بعدی هستم، سرور عالیه 👌</div>
+          <div class="date">۵ روز پیش</div>
+        </div>
+        <div class="comment">
+          <div class="user">Ali_Pro</div>
+          <div class="text">دوست دارم این سرور، ادمین‌ها خیلی فعالن</div>
+          <div class="date">۱ هفته پیش</div>
+        </div>
+      </div>
+
+      <div class="comment-form">
+        <input type="text" id="commentName" placeholder="👤 نام شما" />
+        <input type="text" id="commentText" placeholder="💬 نظر شما..." />
+        <button onclick="addComment()">ارسال نظر</button>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:35px;">
+      <a href="index.html#servers" class="back-btn"><i class="fas fa-arrow-right"></i> بازگشت به لیست سرورها</a>
+    </div>
+  </div>
+
+  <footer>
+    <div>© 2026 GAME-Z.IR | تمامی حقوق محفوظ است</div>
+    <div style="color:#444;font-size:0.7rem;margin-top:2px;">طراحی توسط Arsha_pm</div>
+    <div class="footer-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

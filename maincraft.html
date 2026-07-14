@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game-Z | سرورهای ماینکرفت</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="shortcut icon" href="./pictures/logo daiere.png" type="image/x-icon"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #0A0A0A; color: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    #particles-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+    header {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 45, 85, 0.12);
+      padding: 12px 8%; display: flex; justify-content: space-between; align-items: center;
+      transition: all 0.3s ease;
+    }
+    header.shrink { padding: 8px 8%; background: rgba(0, 0, 0, 0.92); }
+    .logo { height: 44px; transition: 0.3s; filter: drop-shadow(0 0 12px rgba(255, 45, 85, 0.2)); }
+    header.shrink .logo { height: 34px; }
+
+    nav { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    nav a { color: #d0d0d0; font-weight: 600; font-size: 0.9rem; transition: 0.3s; position: relative; white-space: nowrap; }
+    nav a::after { content: ''; position: absolute; bottom: -4px; right: 0; width: 0; height: 2px; background: linear-gradient(90deg, #FF2D55, #8B5CF6); transition: 0.3s; }
+    nav a:hover { color: #FF2D55; }
+    nav a:hover::after { width: 100%; }
+    .menu-toggle { display: none; font-size: 1.5rem; color: #fff; background: none; border: none; cursor: pointer; }
+
+    .page-hero { position: relative; z-index: 2; padding: 120px 8% 30px; text-align: center; background: radial-gradient(ellipse at 50% 30%, rgba(139, 92, 246, 0.05), transparent 70%); }
+    .page-hero h1 { font-size: 2.4rem; font-weight: 900; background: linear-gradient(135deg, #FF2D55, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .page-hero p { color: #aaa; font-size: 1rem; margin-top: 6px; }
+
+    .search-bar { position: relative; z-index: 2; max-width: 500px; margin: 20px auto 10px; padding: 0 8%; }
+    .search-bar input { width: 100%; padding: 14px 24px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.06); background: rgba(10, 10, 20, 0.6); backdrop-filter: blur(8px); color: #fff; font-size: 0.95rem; outline: none; transition: 0.3s; }
+    .search-bar input:focus { border-color: #FF2D55; box-shadow: 0 0 30px rgba(255, 45, 85, 0.1); }
+    .search-bar input::placeholder { color: #666; }
+
+    .servers-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; padding: 30px 8% 70px; }
+    .server-card { background: rgba(18, 12, 28, 0.6); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.04); border-radius: 22px; padding: 22px 20px; transition: 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+    .server-card:hover { transform: translateY(-6px); border-color: #FF2D55; box-shadow: 0 0 30px rgba(255, 45, 85, 0.08); }
+    .server-card .top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .server-card .top h3 { color: #FF2D55; font-size: 1.3rem; font-weight: 900; }
+    .server-card .top .badge { background: rgba(34, 197, 94, 0.12); color: #22c55e; padding: 3px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; }
+    .server-card .info { display: flex; flex-wrap: wrap; gap: 8px 16px; color: #999; font-size: 0.8rem; margin: 8px 0 10px; }
+    .server-card .info span i { margin-left: 4px; color: #FF2D55; }
+    .server-card .rating { color: #fbbf24; font-size: 0.85rem; margin-bottom: 6px; }
+    .server-card .ip-box { background: rgba(0,0,0,0.4); padding: 8px 14px; border-radius: 30px; font-family: monospace; font-size: 0.9rem; color: #b0b0ff; text-align: center; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 10px; direction: ltr; }
+    .server-card .actions { display: flex; gap: 8px; }
+    .server-card .actions .copy-btn { flex: 1; background: linear-gradient(135deg, #FF2D55, #8B5CF6); color: #fff; border: none; padding: 9px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.8rem; }
+    .server-card .actions .copy-btn:hover { transform: scale(1.04); box-shadow: 0 0 20px rgba(255, 45, 85, 0.3); }
+    .server-card .actions .detail-btn { background: rgba(255,255,255,0.04); color: #aaa; border: 1px solid rgba(255,255,255,0.04); padding: 9px 16px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.8rem; display: inline-flex; align-items: center; }
+    .server-card .actions .detail-btn:hover { background: rgba(255,255,255,0.08); }
+
+    .back-btn { display: inline-block; padding: 12px 30px; border-radius: 40px; background: rgba(255,255,255,0.05); color: #ccc; border: 1px solid rgba(255,255,255,0.04); transition: 0.3s; font-weight: 700; }
+    .back-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+    footer { position: relative; z-index: 2; text-align: center; padding: 25px 20px 18px; border-top: 1px solid rgba(255,255,255,0.03); background: rgba(0, 0, 0, 0.4); color: #555; font-size: 0.8rem; }
+    footer .footer-icons { display: flex; justify-content: center; gap: 18px; margin-top: 6px; }
+    footer .footer-icons a { color: #444; font-size: 1.3rem; transition: 0.3s; }
+    footer .footer-icons a:hover { color: #FF2D55; transform: scale(1.15); }
+
+    @media (max-width: 768px) {
+      header { padding: 10px 5%; }
+      .logo { height: 36px; }
+      .menu-toggle { display: block; }
+      nav { display: none; flex-direction: column; width: 100%; padding-top: 10px; gap: 8px; }
+      nav.open { display: flex; }
+      nav a { font-size: 0.85rem; }
+      .page-hero h1 { font-size: 1.8rem; }
+      .servers-grid { padding: 20px 5% 50px; gap: 16px; }
+      .server-card { padding: 18px 16px; }
+    }
+    @media (max-width: 480px) {
+      .page-hero h1 { font-size: 1.4rem; }
+      .server-card .top h3 { font-size: 1.1rem; }
+      .server-card .ip-box { font-size: 0.75rem; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <header id="mainHeader">
+    <img src="./pictures/logo daiere.png" alt="Game-Z" class="logo" />
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+    <nav id="mainNav">
+      <a href="index.html"><i class="fas fa-home"></i> خانه</a>
+      <a href="cs2.html"><i class="fas fa-crosshairs"></i> CS2</a>
+      <a href="cs16.html"><i class="fas fa-bolt"></i> CS 1.6</a>
+      <a href="rust.html"><i class="fas fa-shield"></i> Rust</a>
+      <a href="gta6.html"><i class="fas fa-clock"></i> GTA 6</a>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <h1>⛏️ سرورهای ماینکرفت</h1>
+    <p>لیست بهترین سرورهای جاوا و بدراک با پینگ مناسب</p>
+  </section>
+
+  <div class="search-bar">
+    <input id="search" placeholder="🔍 جستجوی سرور..." />
+  </div>
+
+  <div class="servers-grid" id="serversGrid"></div>
+
+  <div style="text-align:center;position:relative;z-index:2;padding:0 8% 30px;">
+    <a href="index.html#servers" class="back-btn"><i class="fas fa-arrow-right"></i> بازگشت به لیست سرورها</a>
+  </div>
+
+  <footer>
+    <div>© 2026 GAME-Z.IR | تمامی حقوق محفوظ است</div>
+    <div style="color:#444;font-size:0.7rem;">طراحی توسط Arsha_pm</div>
+    <div class="footer-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
