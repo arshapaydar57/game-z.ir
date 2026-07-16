@@ -1,228 +1,148 @@
 // ============================================================
-//  Firebase Configuration & Initialization
+//  localStorage FUNCTIONS
 // ============================================================
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  push,
-  remove,
-  update,
-  onValue,
-  query,
-  orderByChild,
-  limitToLast
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDveNGDQz7sXrHtAo6CEq5pnWEkhzb5fWE",
-  authDomain: "game-z-dd5de.firebaseapp.com",
-  databaseURL: "https://game-z-dd5de-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "game-z-dd5de",
-  storageBucket: "game-z-dd5de.firebasestorage.app",
-  messagingSenderId: "579411685421",
-  appId: "1:579411685421:web:6db829e8046a34c72f48a4"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-// ============================================================
-//  FIREBASE CRUD FUNCTIONS
-// ============================================================
-
-// ----- دریافت سرورها -----
-async function getServers() {
+function getServers() {
   try {
-    const snapshot = await get(ref(db, 'servers'));
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      return Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    }
+    const data = localStorage.getItem('gamez_servers');
+    if (data) return JSON.parse(data);
     // داده‌های پیش‌فرض
     const defaultServers = [
-      { name: '🏰 DragonCraft', region: 'ایران', version: '1.20.4', ip: 'play.dragoncraft.ir', players: '150', rating: '4.8', game: 'ماینکرفت', status: '🟢 آنلاین', ping: '70ms', likes: 456, votes: 1234, wipe: 'هر ۷ روز', createdAt: new Date().toISOString() },
-      { name: '⚔️ SkyWars IR', region: 'ایران', version: '1.19.2', ip: 'skywars.ir', players: '200', rating: '4.7', game: 'ماینکرفت', status: '🟢 آنلاین', ping: '65ms', likes: 320, votes: 980, wipe: 'هر ۱۰ روز', createdAt: new Date().toISOString() },
-      { name: '🔫 Persian CS2', region: 'ایران', version: 'CS2', ip: 'cs2.persian.ir', players: '100', rating: '4.9', game: 'CS2', status: '🟢 آنلاین', ping: '60ms', likes: 280, votes: 750, wipe: 'همیشه', createdAt: new Date().toISOString() },
-      { name: '💥 IRAN CS 1.6', region: 'ایران', version: '1.6', ip: 'cs16.iran.ir', players: '80', rating: '4.6', game: 'CS 1.6', status: '🟢 آنلاین', ping: '75ms', likes: 190, votes: 540, wipe: 'همیشه', createdAt: new Date().toISOString() },
-      { name: '🛡️ Rust Iran', region: 'ایران', version: 'Rust', ip: 'rust.iran.ir', players: '60', rating: '4.5', game: 'Rust', status: '🟢 آنلاین', ping: '80ms', likes: 120, votes: 320, wipe: 'هر ۳۰ روز', createdAt: new Date().toISOString() }
+      {
+        id: '1',
+        name: '🏰 DragonCraft',
+        region: 'ایران',
+        version: '1.20.4',
+        ip: 'play.dragoncraft.ir',
+        players: '150',
+        rating: '4.8',
+        game: 'ماینکرفت',
+        status: '🟢 آنلاین',
+        ping: '70ms',
+        likes: 456,
+        votes: 1234,
+        wipe: 'هر ۷ روز'
+      },
+      {
+        id: '2',
+        name: '⚔️ SkyWars IR',
+        region: 'ایران',
+        version: '1.19.2',
+        ip: 'skywars.ir',
+        players: '200',
+        rating: '4.7',
+        game: 'ماینکرفت',
+        status: '🟢 آنلاین',
+        ping: '65ms',
+        likes: 320,
+        votes: 980,
+        wipe: 'هر ۱۰ روز'
+      },
+      {
+        id: '3',
+        name: '🔫 Persian CS2',
+        region: 'ایران',
+        version: 'CS2',
+        ip: 'cs2.persian.ir',
+        players: '100',
+        rating: '4.9',
+        game: 'CS2',
+        status: '🟢 آنلاین',
+        ping: '60ms',
+        likes: 280,
+        votes: 750,
+        wipe: 'همیشه'
+      },
+      {
+        id: '4',
+        name: '💥 IRAN CS 1.6',
+        region: 'ایران',
+        version: '1.6',
+        ip: 'cs16.iran.ir',
+        players: '80',
+        rating: '4.6',
+        game: 'CS 1.6',
+        status: '🟢 آنلاین',
+        ping: '75ms',
+        likes: 190,
+        votes: 540,
+        wipe: 'همیشه'
+      },
+      {
+        id: '5',
+        name: '🛡️ Rust Iran',
+        region: 'ایران',
+        version: 'Rust',
+        ip: 'rust.iran.ir',
+        players: '60',
+        rating: '4.5',
+        game: 'Rust',
+        status: '🟢 آنلاین',
+        ping: '80ms',
+        likes: 120,
+        votes: 320,
+        wipe: 'هر ۳۰ روز'
+      }
     ];
-    
-    // ذخیره داده‌های پیش‌فرض در Firebase
-    for (const server of defaultServers) {
-      const newRef = push(ref(db, 'servers'));
-      await set(newRef, server);
-    }
+    localStorage.setItem('gamez_servers', JSON.stringify(defaultServers));
     return defaultServers;
-  } catch (error) {
-    console.error('❌ خطا در دریافت سرورها:', error);
+  } catch {
     return [];
   }
 }
 
-// ----- افزودن سرور جدید -----
-async function addServerFirebase(serverData) {
+function getComments() {
   try {
-    const newRef = push(ref(db, 'servers'));
-    await set(newRef, serverData);
-    return newRef.key;
-  } catch (error) {
-    console.error('❌ خطا در افزودن سرور:', error);
-    return null;
-  }
-}
-
-// ----- حذف سرور -----
-async function deleteServerFirebase(id) {
-  try {
-    await remove(ref(db, `servers/${id}`));
-    return true;
-  } catch (error) {
-    console.error('❌ خطا در حذف سرور:', error);
-    return false;
-  }
-}
-
-// ----- ویرایش سرور -----
-async function updateServerFirebase(id, data) {
-  try {
-    await update(ref(db, `servers/${id}`), data);
-    return true;
-  } catch (error) {
-    console.error('❌ خطا در ویرایش سرور:', error);
-    return false;
-  }
-}
-
-// ----- دریافت نظرات -----
-async function getComments() {
-  try {
-    const snapshot = await get(ref(db, 'comments'));
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      return Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    }
-    // نظرات پیش‌فرض
+    const data = localStorage.getItem('gamez_comments');
+    if (data) return JSON.parse(data);
     const defaultComments = [
-      { user: 'Arsha_pm', text: '🔥 بهترین سرور ماینکرفت ایران! پینگ عالی و جامعه فعال', server: 'DragonCraft', serverId: '1', date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'), status: 'approved' },
-      { user: 'Reza_Gamer', text: 'منتظر وایپ بعدی هستم، سرور عالیه 👌', server: 'SkyWars IR', serverId: '2', date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'), status: 'approved' },
-      { user: 'Ali_Pro', text: 'دوست دارم این سرور، ادمین‌ها خیلی فعالن', server: 'Persian CS2', serverId: '3', date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'), status: 'approved' }
+      {
+        id: 'c1',
+        user: 'Arsha_pm',
+        text: '🔥 بهترین سرور ماینکرفت ایران! پینگ عالی',
+        server: 'DragonCraft',
+        serverId: '1',
+        date: '۱۴۰۵/۰۴/۱۰ ۱۴:۳۰',
+        status: 'approved'
+      },
+      {
+        id: 'c2',
+        user: 'Reza_Gamer',
+        text: 'منتظر وایپ بعدی هستم، سرور عالیه 👌',
+        server: 'SkyWars IR',
+        serverId: '2',
+        date: '۱۴۰۵/۰۴/۰۸ ۲۰:۱۵',
+        status: 'approved'
+      },
+      {
+        id: 'c3',
+        user: 'Ali_Pro',
+        text: 'دوست دارم این سرور، ادمین‌ها خیلی فعالن',
+        server: 'Persian CS2',
+        serverId: '3',
+        date: '۱۴۰۵/۰۴/۰۵ ۱۸:۴۰',
+        status: 'approved'
+      }
     ];
-    
-    for (const comment of defaultComments) {
-      const newRef = push(ref(db, 'comments'));
-      await set(newRef, comment);
-    }
+    localStorage.setItem('gamez_comments', JSON.stringify(defaultComments));
     return defaultComments;
-  } catch (error) {
-    console.error('❌ خطا در دریافت نظرات:', error);
+  } catch {
     return [];
   }
 }
 
-// ----- افزودن نظر جدید -----
-async function addCommentFirebase(commentData) {
+function getUsers() {
   try {
-    const newRef = push(ref(db, 'comments'));
-    await set(newRef, commentData);
-    return newRef.key;
-  } catch (error) {
-    console.error('❌ خطا در افزودن نظر:', error);
-    return null;
-  }
-}
-
-// ----- تایید نظر -----
-async function approveCommentFirebase(id) {
-  try {
-    await update(ref(db, `comments/${id}`), { status: 'approved' });
-    return true;
-  } catch (error) {
-    console.error('❌ خطا در تایید نظر:', error);
-    return false;
-  }
-}
-
-// ----- رد نظر -----
-async function rejectCommentFirebase(id) {
-  try {
-    await remove(ref(db, `comments/${id}`));
-    return true;
-  } catch (error) {
-    console.error('❌ خطا در رد نظر:', error);
-    return false;
-  }
-}
-
-// ----- حذف نظر -----
-async function deleteCommentFirebase(id) {
-  try {
-    await remove(ref(db, `comments/${id}`));
-    return true;
-  } catch (error) {
-    console.error('❌ خطا در حذف نظر:', error);
-    return false;
-  }
-}
-
-// ----- دریافت کاربران -----
-async function getUsers() {
-  try {
-    const snapshot = await get(ref(db, 'users'));
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      return Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    }
-    // کاربر پیش‌فرض ادمین
-    const adminUser = { username: 'admin', email: 'admin@game-z.ir', password: 'admin', createdAt: new Date().toLocaleDateString('fa-IR') };
-    const newRef = push(ref(db, 'users'));
-    await set(newRef, adminUser);
-    return [adminUser];
-  } catch (error) {
-    console.error('❌ خطا در دریافت کاربران:', error);
+    const data = localStorage.getItem('gamez_users');
+    if (data) return JSON.parse(data);
+    const defaultUsers = [
+      { username: 'admin', email: 'admin@game-z.ir', password: 'admin', createdAt: '۱۴۰۵/۰۱/۰۱' }
+    ];
+    localStorage.setItem('gamez_users', JSON.stringify(defaultUsers));
+    return defaultUsers;
+  } catch {
     return [];
   }
-}
-
-// ----- ثبت‌نام کاربر جدید -----
-async function registerUserFirebase(userData) {
-  try {
-    const snapshot = await get(ref(db, 'users'));
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      const existing = Object.values(data).find(u => u.username === userData.username);
-      if (existing) return { success: false, message: '❌ این نام کاربری قبلاً ثبت شده است!' };
-    }
-    const newRef = push(ref(db, 'users'));
-    await set(newRef, userData);
-    return { success: true, message: '✅ ثبت‌نام با موفقیت انجام شد!' };
-  } catch (error) {
-    console.error('❌ خطا در ثبت‌نام:', error);
-    return { success: false, message: '❌ خطا در ثبت‌نام!' };
-  }
-}
-
-// ============================================================
-//  REAL-TIME LISTENERS
-// ============================================================
-
-function listenToServers(callback) {
-  onValue(ref(db, 'servers'), (snapshot) => {
-    const data = snapshot.val() || {};
-    const servers = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    callback(servers);
-  });
-}
-
-function listenToComments(callback) {
-  onValue(ref(db, 'comments'), (snapshot) => {
-    const data = snapshot.val() || {};
-    const comments = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    callback(comments);
-  });
 }
 
 // ============================================================
@@ -248,11 +168,11 @@ function copyIP(ip) {
 }
 
 // ============================================================
-//  ADMIN FUNCTIONS (با Firebase)
+//  ADMIN FUNCTIONS
 // ============================================================
 
 // ----- افزودن سرور جدید -----
-window.addServer = async function() {
+function addServer() {
   const name = document.getElementById('newName')?.value?.trim();
   const region = document.getElementById('newRegion')?.value?.trim();
   const version = document.getElementById('newVersion')?.value?.trim();
@@ -266,7 +186,9 @@ window.addServer = async function() {
     return;
   }
 
+  const servers = getServers();
   const newServer = {
+    id: Date.now().toString(),
     name: name,
     region: region || 'ایران',
     version: version || '1.0',
@@ -278,51 +200,34 @@ window.addServer = async function() {
     ping: '50ms',
     likes: 0,
     votes: 0,
-    wipe: 'همیشه',
-    createdAt: new Date().toISOString()
+    wipe: 'همیشه'
   };
 
-  const result = await addServerFirebase(newServer);
-  if (result) {
-    alert('✅ سرور با موفقیت افزوده شد!');
-    loadAdminData();
-    // پاک کردن فرم
-    document.getElementById('newName').value = '';
-    document.getElementById('newRegion').value = '';
-    document.getElementById('newVersion').value = '';
-    document.getElementById('newIp').value = '';
-    document.getElementById('newPlayers').value = '';
-    document.getElementById('newRating').value = '4.5';
-    document.getElementById('newGame').value = 'ماینکرفت';
-  } else {
-    alert('❌ خطا در افزودن سرور!');
-  }
-};
+  servers.push(newServer);
+  localStorage.setItem('gamez_servers', JSON.stringify(servers));
+  alert('✅ سرور با موفقیت افزوده شد!');
+  loadAdminData();
+}
 
 // ----- حذف سرور -----
-window.deleteServer = async function(id) {
+function deleteServer(id) {
   if (!confirm('⚠️ آیا از حذف این سرور مطمئن هستید؟')) return;
-  const result = await deleteServerFirebase(id);
-  if (result) {
-    loadAdminData();
-  } else {
-    alert('❌ خطا در حذف سرور!');
-  }
-};
+  let servers = getServers();
+  servers = servers.filter(s => s.id !== id);
+  localStorage.setItem('gamez_servers', JSON.stringify(servers));
+  loadAdminData();
+}
 
 // ----- ویرایش سرور -----
-window.editServer = function(id) {
-  loadServersForEdit(id);
-};
-
-async function loadServersForEdit(id) {
-  const servers = await getServers();
+function editServer(id) {
+  const servers = getServers();
   const server = servers.find(s => s.id === id);
   if (!server) {
     alert('❌ سرور پیدا نشد!');
     return;
   }
 
+  // پر کردن فرم با اطلاعات سرور
   document.getElementById('newName').value = server.name || '';
   document.getElementById('newRegion').value = server.region || '';
   document.getElementById('newVersion').value = server.version || '';
@@ -331,6 +236,7 @@ async function loadServersForEdit(id) {
   document.getElementById('newRating').value = server.rating || '4.5';
   document.getElementById('newGame').value = server.game || 'ماینکرفت';
 
+  // تغییر دکمه افزودن به ویرایش
   const btn = document.querySelector('.admin-form button');
   btn.innerHTML = '<i class="fas fa-edit"></i> ویرایش سرور';
   btn.onclick = function() {
@@ -341,7 +247,7 @@ async function loadServersForEdit(id) {
 }
 
 // ----- بروزرسانی سرور -----
-window.updateServer = async function(id) {
+function updateServer(id) {
   const name = document.getElementById('newName')?.value?.trim();
   const region = document.getElementById('newRegion')?.value?.trim();
   const version = document.getElementById('newVersion')?.value?.trim();
@@ -355,7 +261,15 @@ window.updateServer = async function(id) {
     return;
   }
 
-  const data = {
+  let servers = getServers();
+  const index = servers.findIndex(s => s.id === id);
+  if (index === -1) {
+    alert('❌ سرور پیدا نشد!');
+    return;
+  }
+
+  servers[index] = {
+    ...servers[index],
     name: name,
     region: region || 'ایران',
     version: version || '1.0',
@@ -365,94 +279,81 @@ window.updateServer = async function(id) {
     game: game || 'ماینکرفت'
   };
 
-  const result = await updateServerFirebase(id, data);
-  if (result) {
-    alert('✅ سرور با موفقیت ویرایش شد!');
-    
-    // بازگشت دکمه به حالت اولیه
-    const btn = document.querySelector('.admin-form button');
-    btn.innerHTML = '<i class="fas fa-save"></i> افزودن سرور';
-    btn.onclick = window.addServer;
-    
-    // پاک کردن فرم
-    document.getElementById('newName').value = '';
-    document.getElementById('newRegion').value = '';
-    document.getElementById('newVersion').value = '';
-    document.getElementById('newIp').value = '';
-    document.getElementById('newPlayers').value = '';
-    document.getElementById('newRating').value = '4.5';
-    document.getElementById('newGame').value = 'ماینکرفت';
-    
-    loadAdminData();
-  } else {
-    alert('❌ خطا در ویرایش سرور!');
-  }
-};
+  localStorage.setItem('gamez_servers', JSON.stringify(servers));
+  alert('✅ سرور با موفقیت ویرایش شد!');
+  
+  // بازگشت دکمه به حالت اولیه
+  const btn = document.querySelector('.admin-form button');
+  btn.innerHTML = '<i class="fas fa-save"></i> افزودن سرور';
+  btn.onclick = addServer;
+  
+  // پاک کردن فرم
+  document.getElementById('newName').value = '';
+  document.getElementById('newRegion').value = '';
+  document.getElementById('newVersion').value = '';
+  document.getElementById('newIp').value = '';
+  document.getElementById('newPlayers').value = '';
+  document.getElementById('newRating').value = '4.5';
+  document.getElementById('newGame').value = 'ماینکرفت';
+  
+  loadAdminData();
+}
 
 // ----- تایید نظر -----
-window.approveComment = async function(id) {
-  const result = await approveCommentFirebase(id);
-  if (result) {
+function approveComment(id) {
+  const comments = getComments();
+  const comment = comments.find(c => c.id === id);
+  if (comment) {
+    comment.status = 'approved';
+    localStorage.setItem('gamez_comments', JSON.stringify(comments));
     loadAdminData();
   }
-};
+}
 
 // ----- رد نظر -----
-window.rejectComment = async function(id) {
+function rejectComment(id) {
   if (!confirm('⚠️ آیا از رد این نظر مطمئن هستید؟')) return;
-  const result = await rejectCommentFirebase(id);
-  if (result) {
-    loadAdminData();
-  }
-};
+  const comments = getComments();
+  const filtered = comments.filter(c => c.id !== id);
+  localStorage.setItem('gamez_comments', JSON.stringify(filtered));
+  loadAdminData();
+}
 
 // ----- حذف نظر -----
-window.deleteComment = async function(id) {
+function deleteComment(id) {
   if (!confirm('⚠️ آیا از حذف این نظر مطمئن هستید؟')) return;
-  const result = await deleteCommentFirebase(id);
-  if (result) {
-    loadAdminData();
-  }
-};
+  const comments = getComments();
+  const filtered = comments.filter(c => c.id !== id);
+  localStorage.setItem('gamez_comments', JSON.stringify(filtered));
+  loadAdminData();
+}
 
 // ----- حذف کاربر -----
-window.deleteUser = async function(username) {
+function deleteUser(username) {
   if (username === 'admin') {
     alert('❌ نمی‌توانید ادمین اصلی را حذف کنید!');
     return;
   }
   if (!confirm(`⚠️ آیا از حذف کاربر "${username}" مطمئن هستید؟`)) return;
-  
-  const users = await getUsers();
-  const user = users.find(u => u.username === username);
-  if (user && user.id) {
-    const result = await deleteCommentFirebase(user.id); // استفاده از deleteCommentFirebase برای حذف کاربر
-    // در واقع باید تابع جداگانه برای حذف کاربر بنویسیم
-    try {
-      await remove(ref(db, `users/${user.id}`));
-      loadAdminData();
-    } catch (error) {
-      alert('❌ خطا در حذف کاربر!');
-    }
-  }
-};
+  let users = getUsers();
+  users = users.filter(u => u.username !== username);
+  localStorage.setItem('gamez_users', JSON.stringify(users));
+  loadAdminData();
+}
 
 // ----- خروج از حساب -----
-window.logout = function() {
+function logout() {
   localStorage.removeItem('gamez_current_user');
   window.location.href = 'login.html';
-};
+}
 
 // ============================================================
 //  LOAD ADMIN DATA
 // ============================================================
 
-async function loadAdminData() {
-  const servers = await getServers();
-  const comments = await getComments();
-  const users = await getUsers();
-
+function loadAdminData() {
   // ===== سرورها =====
+  const servers = getServers();
   const serverBody = document.getElementById('serverTableBody');
   if (serverBody) {
     if (servers.length === 0) {
@@ -483,6 +384,7 @@ async function loadAdminData() {
   }
 
   // ===== نظرات در انتظار =====
+  const comments = getComments();
   const pendingBody = document.getElementById('pendingCommentsBody');
   if (pendingBody) {
     const pending = comments.filter(c => c.status === 'pending');
@@ -543,6 +445,7 @@ async function loadAdminData() {
   }
 
   // ===== کاربران =====
+  const users = getUsers();
   const usersBody = document.getElementById('usersTableBody');
   if (usersBody) {
     if (users.length === 0) {
@@ -594,14 +497,14 @@ async function loadAdminData() {
 //  RENDER SERVER LIST (برای صفحات بازی)
 // ============================================================
 
-async function renderServerList(containerId, gameFilter) {
+function renderServerList(containerId, gameFilter) {
   const container = document.getElementById(containerId);
   if (!container) {
     console.error('❌ کانتینر پیدا نشد:', containerId);
     return;
   }
 
-  let servers = await getServers();
+  let servers = getServers();
   
   if (gameFilter) {
     servers = servers.filter(s => s.game === gameFilter);
@@ -654,6 +557,7 @@ async function renderServerList(containerId, gameFilter) {
 
   container.innerHTML = html;
 
+  // فعال کردن انیمیشن reveal
   document.querySelectorAll(`#${containerId} .server-card`).forEach((el, i) => {
     setTimeout(() => el.classList.add('active'), i * 100);
   });
@@ -677,7 +581,7 @@ function setupSearch(searchId, containerId) {
 //  SERVER DETAIL
 // ============================================================
 
-async function loadServerDetail() {
+function loadServerDetail() {
   const params = new URLSearchParams(window.location.search);
   const serverId = params.get('id');
   
@@ -687,7 +591,7 @@ async function loadServerDetail() {
     return;
   }
 
-  const servers = await getServers();
+  const servers = getServers();
   const server = servers.find(s => s.id === serverId);
   
   if (!server) {
@@ -732,7 +636,7 @@ async function loadServerDetail() {
   if (elements.ratingCount) elements.ratingCount.textContent = `(${(server.votes || 0).toLocaleString()} رأی)`;
   
   // نظرات
-  const comments = (await getComments()).filter(c => c.serverId === serverId && c.status === 'approved');
+  const comments = getComments().filter(c => c.serverId === serverId && c.status === 'approved');
   const commentsList = document.getElementById('commentsList');
   if (commentsList) {
     if (comments.length === 0) {
@@ -754,10 +658,10 @@ async function loadServerDetail() {
 }
 
 // ============================================================
-//  COMMENT FUNCTIONS (برای server-detail)
+//  COMMENT FUNCTIONS (for server-detail)
 // ============================================================
 
-window.addComment = async function() {
+function addComment() {
   const params = new URLSearchParams(window.location.search);
   const serverId = params.get('id');
   
@@ -774,141 +678,63 @@ window.addComment = async function() {
     return;
   }
 
-  const servers = await getServers();
+  const servers = getServers();
   const server = servers.find(s => s.id === serverId);
   const serverName = server ? server.name : 'سرور';
 
-  const commentData = {
+  const comments = getComments();
+  comments.push({
+    id: Date.now().toString(),
     user: name,
     text: text,
     server: serverName,
     serverId: serverId,
     date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'),
     status: 'pending'
-  };
+  });
 
-  const result = await addCommentFirebase(commentData);
+  localStorage.setItem('gamez_comments', JSON.stringify(comments));
   
-  if (result) {
-    const commentText = document.getElementById('commentText');
-    if (commentText) commentText.value = '';
-    
-    alert('✅ نظر شما ثبت شد و پس از تایید ادمین نمایش داده می‌شود!');
-    loadServerDetail();
-  } else {
-    alert('❌ خطا در ثبت نظر!');
-  }
-};
+  const commentText = document.getElementById('commentText');
+  if (commentText) commentText.value = '';
+  
+  alert('✅ نظر شما ثبت شد و پس از تایید ادمین نمایش داده می‌شود!');
+  loadServerDetail();
+}
 
-window.vote = async function() {
+function vote() {
   const params = new URLSearchParams(window.location.search);
   const serverId = params.get('id');
   if (!serverId) return;
 
-  const servers = await getServers();
+  const servers = getServers();
   const server = servers.find(s => s.id === serverId);
   if (!server) return;
 
   const currentRating = parseFloat(server.rating) || 4.5;
   const newRating = Math.min(5, currentRating + 0.05);
-  const data = {
-    rating: newRating.toFixed(1),
-    votes: (server.votes || 0) + 1
-  };
+  server.rating = newRating.toFixed(1);
+  server.votes = (server.votes || 0) + 1;
   
-  const result = await updateServerFirebase(serverId, data);
-  if (result) {
-    loadServerDetail();
-    alert('✅ امتیاز شما ثبت شد!');
-  }
-};
+  localStorage.setItem('gamez_servers', JSON.stringify(servers));
+  loadServerDetail();
+  alert('✅ امتیاز شما ثبت شد!');
+}
 
-window.like = async function() {
+function like() {
   const params = new URLSearchParams(window.location.search);
   const serverId = params.get('id');
   if (!serverId) return;
 
-  const servers = await getServers();
+  const servers = getServers();
   const server = servers.find(s => s.id === serverId);
   if (!server) return;
 
-  const data = { likes: (server.likes || 0) + 1 };
-  const result = await updateServerFirebase(serverId, data);
-  if (result) {
-    loadServerDetail();
-    alert('❤️ لایک کردید!');
-  }
-};
-
-// ============================================================
-//  LOGIN / REGISTER
-// ============================================================
-
-window.handleLogin = async function(e) {
-  if (e) e.preventDefault();
-  const username = document.getElementById('loginUser')?.value?.trim();
-  const password = document.getElementById('loginPass')?.value?.trim();
-
-  if (!username || !password) {
-    alert('❌ لطفاً نام کاربری و رمز عبور را وارد کنید!');
-    return;
-  }
-
-  const users = await getUsers();
-  const user = users.find(u => u.username === username && u.password === password);
-
-  if (!user) {
-    alert('❌ نام کاربری یا رمز عبور اشتباه است!');
-    return;
-  }
-
-  localStorage.setItem('gamez_current_user', username);
-  alert(`✅ خوش آمدید ${username}!`);
-  
-  if (username === 'admin') {
-    window.location.href = 'admin.html';
-  } else {
-    window.location.href = 'index.html';
-  }
-};
-
-window.handleRegister = async function(e) {
-  if (e) e.preventDefault();
-  const username = document.getElementById('regUser')?.value?.trim();
-  const email = document.getElementById('regEmail')?.value?.trim();
-  const password = document.getElementById('regPass')?.value;
-  const password2 = document.getElementById('regPass2')?.value;
-
-  if (!username || !email || !password) {
-    alert('❌ لطفاً تمام فیلدها را پر کنید!');
-    return;
-  }
-
-  if (password.length < 6) {
-    alert('❌ رمز عبور باید حداقل ۶ کاراکتر باشد!');
-    return;
-  }
-
-  if (password !== password2) {
-    alert('❌ رمز عبور و تکرار آن مطابقت ندارند!');
-    return;
-  }
-
-  const userData = {
-    username: username,
-    email: email,
-    password: password,
-    createdAt: new Date().toLocaleDateString('fa-IR')
-  };
-
-  const result = await registerUserFirebase(userData);
-  alert(result.message);
-  
-  if (result.success) {
-    localStorage.setItem('gamez_current_user', username);
-    window.location.href = 'index.html';
-  }
-};
+  server.likes = (server.likes || 0) + 1;
+  localStorage.setItem('gamez_servers', JSON.stringify(servers));
+  loadServerDetail();
+  alert('❤️ لایک کردید!');
+}
 
 // ============================================================
 //  HEADER SHRINK
@@ -1023,23 +849,77 @@ function initParticles() {
 }
 
 // ============================================================
-//  USER BADGE
+//  LOGIN / REGISTER
 // ============================================================
 
-function initUserBadge() {
-  const user = localStorage.getItem('gamez_current_user');
-  const badge = document.getElementById('userBadge');
-  if (!badge) return;
-  if (user === 'admin') {
-    badge.textContent = '👑 ادمین';
-    badge.classList.add('admin');
-    badge.onclick = () => window.location.href = 'admin.html';
-  } else if (user) {
-    badge.textContent = '👤 ' + user;
-  } else {
-    badge.textContent = '👤 مهمان';
-    badge.onclick = () => window.location.href = 'login.html';
+function handleLogin(e) {
+  e.preventDefault();
+  const username = document.getElementById('loginUser')?.value?.trim();
+  const password = document.getElementById('loginPass')?.value?.trim();
+
+  if (!username || !password) {
+    alert('❌ لطفاً نام کاربری و رمز عبور را وارد کنید!');
+    return;
   }
+
+  const users = getUsers();
+  const user = users.find(u => u.username === username && u.password === password);
+
+  if (!user) {
+    alert('❌ نام کاربری یا رمز عبور اشتباه است!');
+    return;
+  }
+
+  localStorage.setItem('gamez_current_user', username);
+  alert(`✅ خوش آمدید ${username}!`);
+  
+  if (username === 'admin') {
+    window.location.href = 'admin.html';
+  } else {
+    window.location.href = 'index.html';
+  }
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  const username = document.getElementById('regUser')?.value?.trim();
+  const email = document.getElementById('regEmail')?.value?.trim();
+  const password = document.getElementById('regPass')?.value;
+  const password2 = document.getElementById('regPass2')?.value;
+
+  if (!username || !email || !password) {
+    alert('❌ لطفاً تمام فیلدها را پر کنید!');
+    return;
+  }
+
+  if (password.length < 6) {
+    alert('❌ رمز عبور باید حداقل ۶ کاراکتر باشد!');
+    return;
+  }
+
+  if (password !== password2) {
+    alert('❌ رمز عبور و تکرار آن مطابقت ندارند!');
+    return;
+  }
+
+  const users = getUsers();
+  if (users.find(u => u.username === username)) {
+    alert('❌ این نام کاربری قبلاً ثبت شده است!');
+    return;
+  }
+
+  users.push({
+    username: username,
+    email: email,
+    password: password,
+    createdAt: new Date().toLocaleDateString('fa-IR')
+  });
+
+  localStorage.setItem('gamez_users', JSON.stringify(users));
+  localStorage.setItem('gamez_current_user', username);
+  
+  alert('✅ ثبت‌نام با موفقیت انجام شد!');
+  window.location.href = 'index.html';
 }
 
 // ============================================================
@@ -1047,13 +927,19 @@ function initUserBadge() {
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('🚀 Game-Z با Firebase Loaded!');
+  console.log('🚀 Game-Z Loaded!');
   
+  // ذرات
   initParticles();
+  
+  // هدر
   initHeaderShrink();
+  
+  // منو
   initMobileMenu();
+  
+  // انیمیشن
   initReveal();
-  initUserBadge();
   
   // ===== فرم‌های لاگین و ثبت‌نام =====
   const loginForm = document.getElementById('loginForm');
@@ -1088,5 +974,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // ===== صفحه جزئیات سرور =====
   if (document.getElementById('detailName')) {
     loadServerDetail();
+    
+    // دکمه کپی IP در صفحه جزئیات
+    const copyBtn = document.querySelector('.copy-big');
+    if (copyBtn) {
+      copyBtn.onclick = function() {
+        const ip = document.getElementById('ipBox')?.textContent;
+        if (ip) copyIP(ip);
+      };
+    }
   }
 });

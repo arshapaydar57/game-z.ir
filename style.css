@@ -150,3 +150,11 @@ body {
     font-size: 3rem;
   }
 }
+
+/* Game-Z Redesign Layer */
+:root{--bg:#07070a;--card:rgba(18,18,22,.72);--accent:#ff355e;--accent2:#8b5cf6}
+body{background:radial-gradient(circle at top,rgba(139,92,246,.18),transparent 35%),radial-gradient(circle at bottom,rgba(255,53,94,.18),transparent 35%),var(--bg)!important;color:#fff}
+header,.navbar,nav{backdrop-filter:blur(18px);background:rgba(10,10,14,.55)!important;border-bottom:1px solid rgba(255,255,255,.08)}
+.card,.server-card,.server,.game-card,.box{background:var(--card)!important;border:1px solid rgba(255,255,255,.08);border-radius:22px;box-shadow:0 0 35px rgba(255,53,94,.12);transition:.3s}
+.card:hover,.server-card:hover,.server:hover,.game-card:hover,.box:hover{transform:translateY(-6px);box-shadow:0 0 40px rgba(139,92,246,.25)}
+button,.btn{background:linear-gradient(135deg,var(--accent),var(--accent2))!important;border:none;border-radius:14px;color:#fff}
