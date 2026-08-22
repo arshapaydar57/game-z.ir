@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ریست داده‌ها</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="shortcut icon" href="./logo.png" type="image/x-icon"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .reset-container {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 40px 50px;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 159, 0.06);
+      max-width: 500px;
+      margin: 120px auto;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .reset-container h1 {
+      color: var(--neon-green);
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+    .reset-container p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    .reset-container .btn {
+      padding: 14px 35px;
+      border-radius: 30px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .reset-container .btn-danger {
+      background: linear-gradient(135deg, #FF2D55, #cc0033);
+      color: #fff;
+    }
+    .reset-container .btn-danger:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255,45,85,0.3);
+    }
+    .reset-container .btn-success {
+      background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+      color: #0a0a0f;
+    }
+    .reset-container .btn-success:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 255, 159, 0.2);
+    }
+    .reset-container .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      border: 1px solid rgba(0, 255, 159, 0.04);
+    }
+    .reset-container .btn-secondary:hover {
+      background: rgba(0, 255, 159, 0.06);
+    }
+    .reset-container .status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.2);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .reset-container .status.success { color: var(--neon-green); }
+    .reset-container .status.error { color: #FF2D55; }
+    .reset-container .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .reset-container .btn-group .btn {
+      flex: 1;
+      min-width: 140px;
+    }
+    @media (max-width: 480px) {
+      .reset-container { padding: 30px 20px; margin: 100px 16px; }
+      .reset-container h1 { font-size: 1.5rem; }
+      .reset-container .btn-group .btn { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <header id="mainHeader">
+    <img src="./logo.png" alt="Game-Z" class="logo" />
+    <div class="header-controls">
+      <button class="theme-toggle" id="themeToggle" aria-label="تغییر تم">🌙</button>
+    </div>
+    <nav id="mainNav">
+      <a href="index.html"><i class="fas fa-home"></i> خانه</a>
+      <a href="admin.html"><i class="fas fa-shield-alt"></i> پنل ادمین</a>
+    </nav>
+  </header>
+
+  <div class="reset-container">
+    <h1>🔄 ریست داده‌ها</h1>
+    <p>این عمل تمام داده‌های سرورها، نظرات و کاربران را در Firebase بازنشانی می‌کند.</p>
+    
+    <div class="btn-group">
+      <button class="btn btn-danger" onclick="resetAllData()">
+        <i class="fas fa-trash"></i> ریست کامل
+      </button>
+      <button class="btn btn-success" onclick="loadDefaultData()">
+        <i class="fas fa-upload"></i> بارگذاری پیش‌فرض
+      </button>
+    </div>
+    
+    <div style="margin-top:15px;">
+      <a href="admin.html" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> بازگشت به پنل ادمین
+      </a>
+    </div>
+    
+    <div id="status" class="status">⏳ آماده...</div>
+  </div>
+
+  <footer>
+    <div>© 2026 GAME-Z.IR | تمامی حقوق محفوظ است</div>
+    <div style="color:var(--text-secondary);font-size:0.7rem;">طراحی توسط Arsha_pm</div>
+    <div class="footer-icons">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+
+  <script type="module">
+    const firebaseConfig = {
+      apiKey: "AIzaSyDveNGDQz7sXrHtAo6CEq5pnWEkhzb5fWE",
+      authDomain: "game-z-dd5de.firebaseapp.com",
+      databaseURL: "https://game-z-dd5de-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "game-z-dd5de",
+      storageBucket: "game-z-dd5de.firebasestorage.app",
+      messagingSenderId: "579411685421",
+      appId: "1:579411685421:web:6db829e8046a34c72f48a4"
+    };
+
+    const statusEl = document.getElementById('status');
+    let db, ref, set, push, remove, get;
+
+    // اتصال به Firebase به‌صورت import پویا؛ اگر مسدود/قطع باشه، پیام واضح نشون میده
+    // به‌جای اینکه کل اسکریپت بی‌صدا خراب بشه.
+    async function connectFirebase() {
+      try {
+        const appMod = await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js");
+        const dbMod = await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js");
+        const app = appMod.initializeApp(firebaseConfig);
+        db = dbMod.getDatabase(app);
+        ({ ref, set, push, remove, get } = dbMod);
+        return true;
+      } catch (e) {
+        statusEl.textContent = '⚠️ اتصال به Firebase برقرار نشد. اتصال اینترنت یا فیلترشکن خودت رو بررسی کن و صفحه رو رفرش کن.';
+        statusEl.className = 'status error';
+        console.error('🔥 Firebase unreachable:', e);
+        return false;
+      }
+    }
+
+    const defaultServers = [
+      { name: '🏰 DragonCraft', region: 'ایران', version: '1.20.4', ip: 'play.dragoncraft.ir', players: '150', rating: '4.8', game: 'ماینکرفت', status: '🟢 آنلاین', ping: '70ms', likes: 456, votes: 1234, wipe: 'هر ۷ روز', createdAt: new Date().toISOString() },
+      { name: '⚔️ SkyWars IR', region: 'ایران', version: '1.19.2', ip: 'skywars.ir', players: '200', rating: '4.7', game: 'ماینکرفت', status: '🟢 آنلاین', ping: '65ms', likes: 320, votes: 980, wipe: 'هر ۱۰ روز', createdAt: new Date().toISOString() },
+      { name: '🔫 Persian CS2', region: 'ایران', version: 'CS2', ip: 'cs2.persian.ir', players: '100', rating: '4.9', game: 'CS2', status: '🟢 آنلاین', ping: '60ms', likes: 280, votes: 750, wipe: 'همیشه', createdAt: new Date().toISOString() },
+      { name: '💥 IRAN CS 1.6', region: 'ایران', version: '1.6', ip: 'cs16.iran.ir', players: '80', rating: '4.6', game: 'CS 1.6', status: '🟢 آنلاین', ping: '75ms', likes: 190, votes: 540, wipe: 'همیشه', createdAt: new Date().toISOString() },
+      { name: '🛡️ Rust Iran', region: 'ایران', version: 'Rust', ip: 'rust.iran.ir', players: '60', rating: '4.5', game: 'Rust', status: '🟢 آنلاین', ping: '80ms', likes: 120, votes: 320, wipe: 'هر ۳۰ روز', createdAt: new Date().toISOString() }
+    ];
+
+    const defaultComments = [
+      { user: 'Arsha_pm', text: '🔥 بهترین سرور ماینکرفت ایران! پینگ عالی و جامعه فعال', server: 'DragonCraft', serverId: '1', date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'), status: 'approved' },
+      { user: 'Reza_Gamer', text: 'منتظر وایپ بعدی هستم، سرور عالیه 👌', server: 'SkyWars IR', serverId: '2', date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'), status: 'approved' },
+      { user: 'Ali_Pro', text: 'دوست دارم این سرور، ادمین‌ها خیلی فعالن', server: 'Persian CS2', serverId: '3', date: new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR'), status: 'approved' }
+    ];
+
+    const defaultUsers = [
+      { username: 'admin', email: 'admin@game-z.ir', password: 'admin', createdAt: '۱۴۰۵/۰۱/۰۱' }
+    ];
+
+    window.resetAllData = async function() {
+      if (!confirm('⚠️ آیا از ریست کامل داده‌ها مطمئن هستید؟ این عمل غیرقابل بازگشت است!')) return;
+      if (!db && !(await connectFirebase())) return;
+      statusEl.textContent = '⏳ در حال پاک کردن داده‌ها...';
+      statusEl.className = 'status';
+      try {
+        await remove(ref(db, 'servers'));
+        await remove(ref(db, 'comments'));
+        await remove(ref(db, 'users'));
+        statusEl.textContent = '✅ داده‌ها با موفقیت پاک شدند! حالا دکمه "بارگذاری پیش‌فرض" را بزنید.';
+        statusEl.className = 'status success';
+      } catch (error) {
+        statusEl.textContent = '❌ خطا در پاک کردن داده‌ها: ' + error.message;
+        statusEl.className = 'status error';
+      }
+    };
+
+    window.loadDefaultData = async function() {
+      if (!db && !(await connectFirebase())) return;
+      statusEl.textContent = '⏳ در حال بارگذاری داده‌های پیش‌فرض...';
+      statusEl.className = 'status';
+      try {
+        for (const server of defaultServers) {
+          const newRef = push(ref(db, 'servers'));
+          await set(newRef, server);
+        }
+        for (const comment of defaultComments) {
+          const newRef = push(ref(db, 'comments'));
+          await set(newRef, comment);
+        }
+        for (const user of defaultUsers) {
+          const newRef = push(ref(db, 'users'));
+          await set(newRef, user);
+        }
+        const serversSnap = await get(ref(db, 'servers'));
+        const commentsSnap = await get(ref(db, 'comments'));
+        const usersSnap = await get(ref(db, 'users'));
+        const serverCount = serversSnap.exists() ? Object.keys(serversSnap.val()).length : 0;
+        const commentCount = commentsSnap.exists() ? Object.keys(commentsSnap.val()).length : 0;
+        const userCount = usersSnap.exists() ? Object.keys(usersSnap.val()).length : 0;
+        statusEl.textContent = `✅ داده‌های پیش‌فرض با موفقیت بارگذاری شدند! (${serverCount} سرور، ${commentCount} نظر، ${userCount} کاربر)`;
+        statusEl.className = 'status success';
+      } catch (error) {
+        statusEl.textContent = '❌ خطا در بارگذاری داده‌ها: ' + error.message;
+        statusEl.className = 'status error';
+      }
+    };
+
+    // نکته: افکت ذرات پس‌زمینه الان به‌صورت مشترک توسط ui.js مدیریت میشه (initParticles)
+    // Check status
+    async function checkStatus() {
+      if (!db && !(await connectFirebase())) return;
+      try {
+        const serversSnap = await get(ref(db, 'servers'));
+        const commentsSnap = await get(ref(db, 'comments'));
+        const usersSnap = await get(ref(db, 'users'));
+        const serverCount = serversSnap.exists() ? Object.keys(serversSnap.val()).length : 0;
+        const commentCount = commentsSnap.exists() ? Object.keys(commentsSnap.val()).length : 0;
+        const userCount = usersSnap.exists() ? Object.keys(usersSnap.val()).length : 0;
+        if (serverCount === 0 && commentCount === 0 && userCount === 0) {
+          statusEl.textContent = '📭 داده‌ای در Firebase وجود ندارد. دکمه "بارگذاری پیش‌فرض" را بزنید.';
+          statusEl.className = 'status';
+        } else {
+          statusEl.textContent = `📊 وضعیت فعلی: ${serverCount} سرور، ${commentCount} نظر، ${userCount} کاربر`;
+          statusEl.className = 'status success';
+        }
+      } catch (error) {
+        statusEl.textContent = '❌ خطا در بررسی وضعیت: ' + error.message;
+        statusEl.className = 'status error';
+      }
+    }
+    checkStatus();
+  </script>
+  <script src="ui.js"></script>
+</body>
+</html>
