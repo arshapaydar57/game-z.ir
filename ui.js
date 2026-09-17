@@ -53,6 +53,24 @@
   }
   window.showToast = showToast;
 
+  // ---------------- گزارش خطاهای جاوااسکریپت روی خود صفحه ----------------
+  // اگه اسکریپتی خطا بده، به‌جای اینکه فقط تو Console پنهان بمونه، یه پیام
+  // قرمز واضح رو صفحه نشون میده تا بدون نیاز به دیباگ فنی هم قابل مشاهده باشه.
+  let lastErrorShown = 0;
+  function reportError(msg) {
+    const now = Date.now();
+    if (now - lastErrorShown < 4000) return; // جلوگیری از سیل پیام‌های تکراری
+    lastErrorShown = now;
+    showToast('⚠️ خطای اسکریپت: ' + msg, 'error');
+  }
+  window.addEventListener('error', (e) => {
+    reportError((e.message || 'خطای ناشناخته') + (e.filename ? ' — ' + e.filename.split('/').pop() + ':' + e.lineno : ''));
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    const reason = e.reason && e.reason.message ? e.reason.message : String(e.reason);
+    reportError('Promise rejected — ' + reason);
+  });
+
   // ---------------- COPY IP ----------------
   window.copyIP = function (ip) {
     if (!ip) { showToast('❌ آی‌پی نامعتبر!', 'error'); return; }

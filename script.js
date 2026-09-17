@@ -20,21 +20,41 @@ let _db = null;
 let _fn = {}; // ref, get, set, push, remove, update, onValue
 let _firebaseReady = null; // Promise<boolean>
 
+const FIREBASE_CONNECT_TIMEOUT_MS = 9000;
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((resolve) => setTimeout(() => resolve('__timeout__'), ms))
+  ]);
+}
+
 function initFirebase() {
   if (_firebaseReady) return _firebaseReady;
   _firebaseReady = (async () => {
     try {
-      const appMod = await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js");
-      const dbMod = await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js");
-      const app = appMod.initializeApp(firebaseConfig);
-      _db = dbMod.getDatabase(app);
+      const result = await withTimeout((async () => {
+        const appMod = await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js");
+        const dbMod = await import("https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js");
+        const app = appMod.initializeApp(firebaseConfig);
+        const db = dbMod.getDatabase(app);
+        return { db, dbMod };
+      })(), FIREBASE_CONNECT_TIMEOUT_MS);
+
+      if (result === '__timeout__') {
+        console.error('🔥 اتصال به Firebase بیش از حد طول کشید (تایم‌اوت). احتمالاً دامنه gstatic.com/firebase مسدود یا کند است.');
+        _firebaseReady = null; // اجازه بده دفعه بعد دوباره امتحان کنه
+        return false;
+      }
+      _db = result.db;
       _fn = {
-        ref: dbMod.ref, get: dbMod.get, set: dbMod.set,
-        push: dbMod.push, remove: dbMod.remove, update: dbMod.update, onValue: dbMod.onValue
+        ref: result.dbMod.ref, get: result.dbMod.get, set: result.dbMod.set,
+        push: result.dbMod.push, remove: result.dbMod.remove, update: result.dbMod.update, onValue: result.dbMod.onValue
       };
       return true;
     } catch (err) {
       console.error('🔥 اتصال به Firebase برقرار نشد (ممکنه دامنه مسدود باشه):', err);
+      _firebaseReady = null;
       return false;
     }
   })();
@@ -82,12 +102,15 @@ const refreshReveal = () => { if (window.gzInitReveal) window.gzInitReveal(); };
 // ============================================================
 //  FIREBASE CRUD (همه محافظت‌شده با ensureFirebase)
 // ============================================================
+const DB_OP_TIMEOUT_MS = 9000;
+function dbTimeout(promise) { return withTimeout(promise, DB_OP_TIMEOUT_MS); }
 async function ensureFirebase() { return await initFirebase(); }
 
 export async function getServers() {
   if (!(await ensureFirebase())) return null; // null = خطای اتصال، [] = واقعاً خالیه
   try {
-    const snapshot = await _fn.get(_fn.ref(_db, 'servers'));
+    const snapshot = await dbTimeout(_fn.get(_fn.ref(_db, 'servers')));
+    if (snapshot === '__timeout__') { console.error('⏱️ تایم‌اوت در دریافت سرورها'); return null; }
     if (snapshot.exists()) {
       const data = snapshot.val();
       return Object.keys(data).map(key => ({ id: key, ...data[key] }));
@@ -99,24 +122,30 @@ export async function addServerFirebase(serverData) {
   if (!(await ensureFirebase())) return null;
   try {
     const newRef = _fn.push(_fn.ref(_db, 'servers'));
-    await _fn.set(newRef, serverData);
+    const result = await dbTimeout(_fn.set(newRef, serverData));
+    if (result === '__timeout__') { console.error('⏱️ تایم‌اوت در افزودن سرور'); return null; }
     return newRef.key;
   } catch (e) { console.error('❌ خطا در افزودن سرور:', e); return null; }
 }
 export async function deleteServerFirebase(id) {
   if (!(await ensureFirebase())) return false;
-  try { await _fn.remove(_fn.ref(_db, `servers/${id}`)); return true; }
-  catch (e) { console.error('❌ خطا در حذف سرور:', e); return false; }
+  try {
+    const result = await dbTimeout(_fn.remove(_fn.ref(_db, `servers/${id}`)));
+    return result !== '__timeout__';
+  } catch (e) { console.error('❌ خطا در حذف سرور:', e); return false; }
 }
 export async function updateServerFirebase(id, data) {
   if (!(await ensureFirebase())) return false;
-  try { await _fn.update(_fn.ref(_db, `servers/${id}`), data); return true; }
-  catch (e) { console.error('❌ خطا در ویرایش سرور:', e); return false; }
+  try {
+    const result = await dbTimeout(_fn.update(_fn.ref(_db, `servers/${id}`), data));
+    return result !== '__timeout__';
+  } catch (e) { console.error('❌ خطا در ویرایش سرور:', e); return false; }
 }
 export async function getComments() {
   if (!(await ensureFirebase())) return null;
   try {
-    const snapshot = await _fn.get(_fn.ref(_db, 'comments'));
+    const snapshot = await dbTimeout(_fn.get(_fn.ref(_db, 'comments')));
+    if (snapshot === '__timeout__') { console.error('⏱️ تایم‌اوت در دریافت نظرات'); return null; }
     if (snapshot.exists()) {
       const data = snapshot.val();
       return Object.keys(data).map(key => ({ id: key, ...data[key] }));
@@ -128,29 +157,37 @@ export async function addCommentFirebase(commentData) {
   if (!(await ensureFirebase())) return null;
   try {
     const newRef = _fn.push(_fn.ref(_db, 'comments'));
-    await _fn.set(newRef, commentData);
+    const result = await dbTimeout(_fn.set(newRef, commentData));
+    if (result === '__timeout__') return null;
     return newRef.key;
   } catch (e) { console.error('❌ خطا در افزودن نظر:', e); return null; }
 }
 export async function approveCommentFirebase(id) {
   if (!(await ensureFirebase())) return false;
-  try { await _fn.update(_fn.ref(_db, `comments/${id}`), { status: 'approved' }); return true; }
-  catch (e) { console.error('❌ خطا در تایید نظر:', e); return false; }
+  try {
+    const result = await dbTimeout(_fn.update(_fn.ref(_db, `comments/${id}`), { status: 'approved' }));
+    return result !== '__timeout__';
+  } catch (e) { console.error('❌ خطا در تایید نظر:', e); return false; }
 }
 export async function rejectCommentFirebase(id) {
   if (!(await ensureFirebase())) return false;
-  try { await _fn.remove(_fn.ref(_db, `comments/${id}`)); return true; }
-  catch (e) { console.error('❌ خطا در رد نظر:', e); return false; }
+  try {
+    const result = await dbTimeout(_fn.remove(_fn.ref(_db, `comments/${id}`)));
+    return result !== '__timeout__';
+  } catch (e) { console.error('❌ خطا در رد نظر:', e); return false; }
 }
 export async function deleteCommentFirebase(id) {
   if (!(await ensureFirebase())) return false;
-  try { await _fn.remove(_fn.ref(_db, `comments/${id}`)); return true; }
-  catch (e) { console.error('❌ خطا در حذف نظر:', e); return false; }
+  try {
+    const result = await dbTimeout(_fn.remove(_fn.ref(_db, `comments/${id}`)));
+    return result !== '__timeout__';
+  } catch (e) { console.error('❌ خطا در حذف نظر:', e); return false; }
 }
 export async function getUsers() {
   if (!(await ensureFirebase())) return null;
   try {
-    const snapshot = await _fn.get(_fn.ref(_db, 'users'));
+    const snapshot = await dbTimeout(_fn.get(_fn.ref(_db, 'users')));
+    if (snapshot === '__timeout__') { console.error('⏱️ تایم‌اوت در دریافت کاربران'); return null; }
     if (snapshot.exists()) {
       const data = snapshot.val();
       return Object.keys(data).map(key => ({ id: key, ...data[key] }));
@@ -162,18 +199,22 @@ export async function registerUserFirebase(userData) {
   if (!(await ensureFirebase())) return { success: false, message: '❌ اتصال به پایگاه داده برقرار نشد. اتصال اینترنت خودت رو بررسی کن.' };
   try {
     const users = await getUsers();
-    if (users && users.find(u => u.username === userData.username)) {
+    if (users === null) return { success: false, message: '❌ اتصال به پایگاه داده برقرار نشد. اتصال اینترنت خودت رو بررسی کن.' };
+    if (users.find(u => u.username === userData.username)) {
       return { success: false, message: '❌ این نام کاربری قبلاً ثبت شده است!' };
     }
     const newRef = _fn.push(_fn.ref(_db, 'users'));
-    await _fn.set(newRef, userData);
+    const result = await dbTimeout(_fn.set(newRef, userData));
+    if (result === '__timeout__') return { success: false, message: '❌ درخواست بیش از حد طول کشید. دوباره امتحان کن.' };
     return { success: true, message: '✅ ثبت‌نام با موفقیت انجام شد!' };
   } catch (e) { console.error('❌ خطا در ثبت‌نام:', e); return { success: false, message: '❌ خطا در ثبت‌نام!' }; }
 }
 export async function deleteUserFirebase(id) {
   if (!(await ensureFirebase())) return false;
-  try { await _fn.remove(_fn.ref(_db, `users/${id}`)); return true; }
-  catch (e) { console.error('❌ خطا در حذف کاربر:', e); return false; }
+  try {
+    const result = await dbTimeout(_fn.remove(_fn.ref(_db, `users/${id}`)));
+    return result !== '__timeout__';
+  } catch (e) { console.error('❌ خطا در حذف کاربر:', e); return false; }
 }
 
 // ============================================================
@@ -292,6 +333,9 @@ function initLivePreviewBindings() {
 }
 
 window.addServer = async function () {
+  const submitBtn = document.querySelector('.admin-form button');
+  if (submitBtn && submitBtn.disabled) return; // جلوگیری از دبل‌کلیک حین ارسال
+
   const nameEl = getEl('newName'), ipEl = getEl('newIp'), ratingEl = getEl('newRating');
   const name = nameEl?.value?.trim();
   const region = getEl('newRegion')?.value?.trim();
@@ -317,10 +361,17 @@ window.addServer = async function () {
     status: currentStatusOnline ? '🟢 آنلاین' : '🔴 آفلاین', tags: [...currentTags]
   };
 
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...'; }
+  showToast('⏳ در حال ارسال به سرور...', 'info');
+
   if (editingServerId) {
     const result = await updateServerFirebase(editingServerId, baseData);
     if (result) { showToast('✅ سرور با موفقیت ویرایش شد!', 'success'); resetAdminForm(); loadAdminData(); }
-    else showToast('❌ خطا در ویرایش سرور! اتصال اینترنت را بررسی کنید.', 'error');
+    else {
+      showToast('❌ خطا در ویرایش سرور! اتصال اینترنت یا فیلترشکن را بررسی کن و دوباره امتحان کن.', 'error');
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHtml; }
+    }
     return;
   }
 
@@ -328,18 +379,18 @@ window.addServer = async function () {
   const result = await addServerFirebase(newServer);
   if (result) {
     showToast('✅ سرور با موفقیت افزوده شد!', 'success');
-    const btn = document.querySelector('.admin-form button');
-    if (btn) { const r = btn.getBoundingClientRect(); confettiBurst(r.left + r.width / 2, r.top); }
+    if (submitBtn) { const r = submitBtn.getBoundingClientRect(); confettiBurst(r.left + r.width / 2, r.top); }
     resetAdminForm(); loadAdminData();
   } else {
-    showToast('❌ خطا در افزودن سرور! اتصال اینترنت را بررسی کنید.', 'error');
+    showToast('❌ خطا در افزودن سرور! اتصال اینترنت یا فیلترشکن را بررسی کن و دوباره امتحان کن.', 'error');
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHtml; }
   }
 };
 
 function resetAdminForm() {
   editingServerId = null; currentTags = []; currentStatusOnline = true;
   const btn = document.querySelector('.admin-form button');
-  if (btn) btn.innerHTML = '<i class="fas fa-save"></i> افزودن سرور';
+  if (btn) { btn.innerHTML = '<i class="fas fa-save"></i> افزودن سرور'; btn.disabled = false; }
   document.querySelectorAll('.admin-form input').forEach(el => {
     if (el.id === 'newRating') el.value = '4.5';
     else if (el.id !== 'tagInput') el.value = '';
