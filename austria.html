@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اتریش؛ جایی میان تاریخ و آینده</title>
+<meta name="description" content="تجربه‌ای سه‌بعدی و تعاملی درباره اتریش: ایالت‌ها، شهرها، تاریخ، غذاها و جاذبه‌ها.">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1318;--bg2:#171d25;--tx:#eef1f4;--mu:#9aa6b2;--red:#e0233a;--gold:#d4a84b;--ice:#8fc6e6;--card:rgba(255,255,255,.06);--bd:rgba(255,255,255,.14);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme=light]{--bg:#f3f5f7;--bg2:#e6eaee;--tx:#14181d;--mu:#4c5864;--card:rgba(255,255,255,.7);--bd:rgba(0,0,0,.14)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.9;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+#prog{position:fixed;top:env(safe-area-inset-top,0px);inset-inline-start:0;height:3px;background:var(--red);width:0;z-index:70}
+header{position:fixed;top:env(safe-area-inset-top,0px);inset-inline:0;z-index:50;display:flex;gap:14px;align-items:center;padding:10px 18px;background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.logo{font-weight:900;font-size:1.25rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:22px;height:16px;background:linear-gradient(var(--red) 33%,#fff 33% 66%,var(--red) 66%);border-radius:2px;display:block}
+nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+nav a{color:var(--tx);text-decoration:none;padding:4px 12px;border-radius:99px;white-space:nowrap;font-size:.9rem}
+nav a:hover,nav a:focus-visible{background:var(--bd)}
+button,select,input{font:inherit;color:inherit}
+.tb{background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:4px 12px;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#hero{position:relative;height:100vh;height:100svh;min-height:560px;display:flex;align-items:flex-end;overflow:hidden}
+#gl{position:absolute;inset:0;width:100%;height:100%;background:linear-gradient(#9cc3dd,#e9eff3 55%,#44604b)}
+.hc{position:relative;z-index:2;padding:0 6vw 12vh;max-width:900px;text-shadow:0 2px 24px rgba(0,0,0,.45);color:#fff}
+h1{font-size:clamp(2.6rem,8vw,6.2rem);line-height:1.15;margin:0 0 12px;font-weight:900}
+.hc p{font-size:1.15rem;max-width:34em;margin:0 0 24px}
+.btn{display:inline-block;padding:10px 26px;border-radius:99px;border:1px solid #fff;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);color:#fff;text-decoration:none;cursor:pointer;margin-inline-end:10px}
+.btn.p{background:var(--red);border-color:var(--red)}
+section.s{padding:90px 6vw;max-width:1200px;margin:auto}
+h2{font-size:clamp(1.8rem,4vw,3rem);margin:0 0 8px;font-weight:900}
+.sub{color:var(--mu);margin:0 0 28px;max-width:40em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;perspective:900px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;transition:transform .2s,box-shadow .2s;transform-style:preserve-3d;position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.16),transparent 55%);pointer-events:none}
+.card h3{margin:0;font-size:1.2rem}.card small{color:var(--gold);display:block}
+.card p{margin:8px 0 0;font-size:.92rem;color:var(--mu)}
+.tag{display:inline-block;font-size:.75rem;border:1px solid var(--bd);border-radius:99px;padding:0 10px;margin-top:8px}
+.band{background:var(--bg2)}
+.tl{border-inline-start:2px solid var(--red);padding-inline-start:24px;display:grid;gap:22px}
+.tl div{opacity:.35;transition:opacity .4s}.tl div.on{opacity:1}
+.tl b{color:var(--gold);font-size:1.3rem}
+.tl p{margin:0;max-width:44em}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chips button{padding:4px 16px;border-radius:99px;background:var(--card);border:1px solid var(--bd);cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.facts div{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.facts b{font-size:1.5rem;display:block}.facts span{color:var(--mu);font-size:.82rem}
+#q{width:100%;max-width:520px;padding:10px 18px;border-radius:99px;background:var(--card);border:1px solid var(--bd)}
+#res h4{margin:18px 0 6px;color:var(--gold)}
+.trip{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));align-items:end;margin-bottom:18px}
+.trip label{display:grid;gap:4px;font-size:.9rem}
+.trip select,.trip input{padding:8px 12px;border-radius:10px;background:var(--card);border:1px solid var(--bd)}
+.trip option{color:#000}
+#plan{display:grid;gap:10px}
+.day{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px}
+footer{padding:50px 6vw 70px;color:var(--mu);font-size:.85rem;max-width:1200px;margin:auto}
+footer a{color:var(--ice)}
+#top{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));inset-inline-start:18px;z-index:40;width:44px;height:44px;border-radius:50%;opacity:0;pointer-events:none;transition:opacity .3s}
+#top.v{opacity:1;pointer-events:auto}
+#intro{position:fixed;inset:0;z-index:100;background:#0f1318;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .7s}
+#intro .bar{width:180px;height:3px;background:#333;overflow:hidden}#intro .bar i{display:block;height:100%;background:#e0233a;animation:ld 1.6s forwards}
+@keyframes ld{from{width:0}to{width:100%}}
+#intro button{background:none;border:0;color:#9aa6b2;cursor:pointer;text-decoration:underline}
+@media(max-width:700px){.logo span{display:none}section.s{padding:64px 5vw}}
+.card,.facts div,.day,.tb,.btn,.chips button,#q,.trip select,.trip input,.tag{border-radius:3px}.card{backdrop-filter:none;border-top:3px solid var(--red)}.card small{color:var(--mu)}h1,h2,.logo{font-weight:800}h2{border-inline-start:4px solid var(--red);padding-inline-start:14px}header{background:var(--bg);backdrop-filter:none}.btn{backdrop-filter:none}.tl b{color:var(--red)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="intro"><div class="logo" style="font-size:2rem"><i style="width:36px;height:26px"></i>Austria</div><div class="bar"><i></i></div><button id="skip">رد کردن</button></div>
+<div id="prog"></div>
+<header>
+<a class="logo" href="#hero" style="color:inherit;text-decoration:none"><i></i><span>Austria</span></a>
+<nav aria-label="main"><a href="#states" data-i="n1">ایالت‌ها</a><a href="#cities" data-i="n2">شهرها</a><a href="#sights" data-i="n3">جاذبه‌ها</a><a href="#history" data-i="n4">تاریخ</a><a href="#food" data-i="n5">غذا</a><a href="#facts" data-i="n6">اطلاعات</a><a href="#trip" data-i="n7">برنامه سفر</a><a href="#search" data-i="n8">جست‌وجو</a></nav>
+<select id="lang" class="tb" aria-label="Language"><option value="fa">فارسی</option><option value="en">English</option><option value="de">Deutsch</option></select>
+<button class="tb" id="snow" aria-pressed="true" title="برف">❄</button>
+<button class="tb" id="theme" title="تم">◐</button>
+</header>
+
+<main>
+<section id="hero">
+<canvas id="gl" aria-label="صحنه سه‌بعدی کوه‌های آلپ" role="img"></canvas>
+<div class="hc"><h1 data-i="h1">جمهوری اتریش</h1><p data-i="hp">معرفی جغرافیا، تاریخ، فرهنگ و جاذبه‌های اتریش، کشوری فدرال در قلب اروپای مرکزی.</p>
+<a class="btn p" href="#states" data-i="b1">آشنایی با اتریش</a><a class="btn" href="#sights" data-i="b2">جاذبه‌ها</a></div>
+</section>
+
+<section class="s" id="states"><h2 data-i="t1">۹ ایالت فدرال</h2><p class="sub" data-i="s1">اتریش یک جمهوری فدرال است و از نه ایالت تشکیل شده.</p><div class="grid" id="gStates"></div></section>
+<div class="band"><section class="s" id="cities"><h2 data-i="t2">شهرهای مشهور</h2><p class="sub" data-i="s2">کارت‌ها را لمس کنید یا نشانگر را روی آن‌ها حرکت دهید.</p><div class="grid" id="gCities"></div></section></div>
+<section class="s" id="sights"><h2 data-i="t3">جاذبه‌های دیدنی</h2><p class="sub" data-i="s3">ده مکانی که در سفر به اتریش بسیار پیشنهاد می‌شوند. تصاویر ۳۶۰ درجه در این نسخه وجود ندارد.</p><div class="grid" id="gSights"></div></section>
+<div class="band"><section class="s" id="history"><h2 data-i="t4">تاریخ؛ سفری در زمان</h2><p class="sub" data-i="s4">با اسکرول کردن، دوره‌ها روشن می‌شوند.</p><div class="tl" id="tl"></div></section></div>
+<section class="s" id="food"><h2 data-i="t5">غذاهای سنتی</h2><p class="sub" data-i="s5">بر اساس نوع غذا فیلتر کنید.</p><div class="chips" id="chips"></div><div class="grid" id="gFood"></div></section>
+<div class="band"><section class="s" id="facts"><h2 data-i="t6">اتریش در یک نگاه</h2><p class="sub" data-i="s6">ارقام تقریبی‌اند؛ منبع و سال کنار هر عدد آمده است.</p><div class="facts" id="fx"></div></section></div>
+<section class="s" id="trip"><h2 data-i="t7">سفر رؤیایی من به اتریش</h2><p class="sub" data-i="s7">مدت سفر و علاقه‌مندی را انتخاب کنید تا برنامه روزانه ساخته شود. هزینه تخمین زده نمی‌شود چون قیمت‌ها تغییر می‌کنند.</p>
+<div class="trip"><label>تعداد روز<input type="number" id="days" min="1" max="14" value="5"></label><label>علاقه اصلی<select id="int"><option value="all">همه</option><option value="nature">طبیعت</option><option value="history">تاریخ و هنر</option><option value="winter">ورزش زمستانی</option></select></label><button class="btn p" id="mk" style="margin:0">ساخت برنامه</button><button class="btn" id="pr" style="margin:0;border-color:var(--bd);color:inherit">چاپ / ذخیره PDF</button></div><div id="plan"></div></section>
+<div class="band"><section class="s" id="search"><h2 data-i="t8">جست‌وجو</h2><input id="q" type="search" placeholder="مثلاً: وین، شنیتسل، قلعه…" aria-label="جست‌وجو"><div id="res"></div></section></div>
+</main>
+<footer><p><b>منابع:</b> <a href="https://www.statistik.at/en" target="_blank" rel="noopener">Statistik Austria</a>، <a href="https://www.austria.info/en" target="_blank" rel="noopener">Austria.info (Österreich Werbung)</a>، <a href="https://en.wikipedia.org/wiki/History_of_Austria" target="_blank" rel="noopener">History of Austria</a>. آخرین به‌روزرسانی: ۲۰۲۶/۱۰/۲۴.</p><p>تصاویر: این نسخه عکس واقعی ندارد. هنگام افزودن عکس، منبع و مجوز (مثلاً Wikimedia Commons) باید زیر هر تصویر درج شود.</p><p>این نسخه یک نمونه فرانت‌اند مستقل است؛ بک‌اند، پنل مدیریت و ترجمه کامل محتوا هنوز پیاده‌سازی نشده‌اند.</p></footer>
+<button class="tb" id="top" aria-label="بازگشت به بالا">↑</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const S=[["وین","Wien","پایتخت و کوچک‌ترین ایالت؛ مرکز فرهنگ، موسیقی و معماری امپراتوری."],["نیدراسترایش","Niederösterreich","بزرگ‌ترین ایالت از نظر مساحت؛ دره دانوب، تاکستان‌ها و قلعه‌ها."],["اوبراسترایش","Oberösterreich","مرکز صنعت و منطقه دریاچه‌های زالتس‌کامرگوت؛ مرکز ایالت لینتس است."],["اشتایرمارک","Steiermark","ایالت سبز اتریش؛ جنگل، آبگرم و مرکز آن گراتس."],["تیرول","Tirol","قلب آلپ و ورزش‌های زمستانی؛ مرکز آن اینسبروک."],["زالتسبورگ","Salzburg","زادگاه موتسارت و جشنواره معروف موسیقی تابستان."],["فورآرلبرگ","Vorarlberg","غربی‌ترین ایالت، کنار دریاچه کنستانس و مرز سوئیس."],["کارینتیا","Kärnten","دریاچه‌های گرم تابستانی در جنوب، همسایه ایتالیا و اسلوونی."],["بورگن‌لاند","Burgenland","شرقی‌ترین ایالت؛ دریاچه نویزیدلر، تاکستان و دشت‌های باز."]];
+const C=[["وین","Wien","پایتخت؛ کاخ شون‌برون، اپرا و کافه‌های تاریخی."],["زالتسبورگ","Salzburg","شهر موتسارت با مرکز تاریخی ثبت‌شده در یونسکو."],["اینسبروک","Innsbruck","شهر کوهستانی تیرول و پایگاه ورزش‌های زمستانی."],["گراتس","Graz","شهر دانشگاه‌ها، شهر قدیمی یونسکو و فرهنگ معاصر."],["لینتس","Linz","شهر هنر دیجیتال و فناوری؛ میزبان Ars Electronica."],["هالشتات","Hallstatt","روستای ساحل دریاچه در منطقه میراث جهانی."]];
+const A=[["کاخ شون‌برون","Schönbrunn","اقامتگاه تابستانی هابسبورگ‌ها در وین.","history"],["کاخ هافبورگ","Hofburg","مجموعه کاخ‌های امپراتوری در مرکز وین.","history"],["کلیسای جامع سنت اشتفان","Stephansdom","نماد گوتیک وین با سقف کاشی‌کاری.","history"],["قلعه هوهن‌زالتسبورگ","Hohensalzburg","یکی از بزرگ‌ترین قلعه‌های قرون‌وسطایی اروپا.","history"],["روستای هالشتات","Hallstatt","روستایی کنار دریاچه با کوهستان.","nature"],["جاده گروس‌گلوکنر","Großglockner","جاده مرتفع آلپی نزدیک بلندترین قله اتریش.","nature"],["دریاچه ولفگانگ‌زه","Wolfgangsee","دریاچه‌ای در منطقه زالتس‌کامرگوت.","nature"],["منطقه زِفِلد","Seefeld","منطقه اسکی صحرانوردی و پیاده‌روی در تیرول.","winter"],["دره‌های تیرول","Tirol","دره‌ها و پیست‌های اسکی آلپ.","winter"],["اپرای دولتی وین","Staatsoper","از مهم‌ترین خانه‌های اپرای جهان.","history"]];
+const F=[["شنیتسل وینی","Wiener Schnitzel","main","گوشت گوساله نازک، آردسوخاری‌شده و سرخ‌شده؛ با لیمو."],["تافل‌اشپیتس","Tafelspitz","main","گوشت گاو آب‌پز با سیب‌زمینی و سس هلو‌سیب‌زمینی/ترب."],["کزه‌اشپتسله","Käsespätzle","main","خمیر دست‌ساز با پنیر و پیاز سرخ‌شده."],["زاخرتورته","Sachertorte","dessert","کیک شکلاتی با مربای زردآلو، اختراع وین."],["اپفل‌اشترودل","Apfelstrudel","dessert","خمیر ورقه‌ای نازک پر از سیب و دارچین."],["کایزرشمارن","Kaiserschmarrn","dessert","پنکیک تکه‌تکه‌شده با کشمش و پودر شکر."]];
+const T=[["۱۲۸۲","آغاز حکمرانی هابسبورگ","رودولف یکم اتریش و اشتایرمارک را به پسرانش سپرد؛ دودمان هابسبورگ قرن‌ها بر منطقه حکم راند."],["۱۸۶۷","اتریش–مجارستان","امپراتوری دوگانه شکل گرفت و وین پایتخت یکی از قدرت‌های بزرگ اروپا بود."],["۱۹۱۸","پایان سلطنت","پس از جنگ جهانی اول، سلطنت پایان یافت و جمهوری اعلام شد."],["۱۹۳۸","الحاق به آلمان نازی","اتریش به رایش آلمان ضمیمه شد؛ بعدها اتریش خود را نخستین قربانی دانست و این روایت مورد بحث مورخان است."],["۱۹۴۵","جمهوری دوم","پس از جنگ، جمهوری اتریش بازسازی شد و کشور میان متفقین تقسیم شد."],["۱۹۵۵","پیمان دولتی","اشغال پایان یافت و اتریش استقلال کامل و بی‌طرفی دائمی را اعلام کرد."],["۱۹۹۵","عضویت در اتحادیه اروپا","اتریش به اتحادیه اروپا پیوست و بعدها یورو را پذیرفت."]];
+const X=[["وین","پایتخت","—"],["آلمانی","زبان رسمی","—"],["یورو","واحد پول","—"],["≈ ۹٫۲ میلیون","جمعیت","Statistik Austria، ۲۰۲۴"],["≈ ۸۳٬۹۰۰ کیلومتر مربع","مساحت","Statistik Austria"],["جمهوری فدرال پارلمانی","نظام سیاسی","قانون اساسی"],["از ۱۹۹۵","عضویت در اتحادیه اروپا","EU"],["۳۷۹۸ متر","بلندترین قله: گروس‌گلوکنر","Austria.info"]];
+
+const card=(t,sub,p,tag)=>`<article class="card"><h3>${t}</h3><small>${sub||""}</small><p>${p}</p>${tag?`<span class="tag">${tag}</span>`:""}</article>`;
+$("#gStates").innerHTML=S.map(s=>card(s[0],s[1],s[2])).join("");
+$("#gCities").innerHTML=C.map(s=>card(s[0],s[1],s[2])).join("");
+$("#gSights").innerHTML=A.map(s=>card(s[0],s[1],s[2],{history:"تاریخ و هنر",nature:"طبیعت",winter:"زمستان"}[s[3]])).join("");
+$("#tl").innerHTML=T.map(t=>`<div><b>${t[0]}</b> <strong>${t[1]}</strong><p>${t[2]}</p></div>`).join("");
+$("#fx").innerHTML=X.map(x=>`<div><b>${x[0]}</b>${x[1]}<br><span>منبع: ${x[2]}</span></div>`).join("");
+const fT={all:"همه",main:"غذای اصلی",dessert:"دسر"};let ff="all";
+function rF(){$("#chips").innerHTML=Object.keys(fT).map(k=>`<button aria-pressed="${k==ff}" data-k="${k}">${fT[k]}</button>`).join("");$("#gFood").innerHTML=F.filter(f=>ff=="all"||f[2]==ff).map(f=>card(f[0],f[1],f[3],fT[f[2]])).join("");bindTilt()}
+$("#chips").onclick=e=>{if(e.target.dataset.k){ff=e.target.dataset.k;rF()}};
+
+// 3D tilt on cards
+const RM=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function bindTilt(){return;document.querySelectorAll(".card").forEach(c=>{if(c._t)return;c._t=1;
+c.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.transform=`rotateY(${(x-.5)*12}deg) rotateX(${(.5-y)*12}deg) translateZ(8px)`;c.style.setProperty("--mx",x*100+"%");c.style.setProperty("--my",y*100+"%")});
+c.addEventListener("pointerleave",()=>c.style.transform="")})}
+rF();
+
+// timeline reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("on",e.isIntersecting)),{rootMargin:"-30% 0px -30% 0px"});
+document.querySelectorAll("#tl div").forEach(d=>io.observe(d));
+
+// search
+const idx=[["ایالت‌ها",S],["شهرها",C],["جاذبه‌ها",A],["غذاها",F]];
+$("#q").oninput=e=>{const q=e.target.value.trim().toLowerCase();if(!q){$("#res").innerHTML="";return}
+let h="";idx.forEach(([n,arr])=>{const m=arr.filter(r=>(r[0]+r[1]+r[2]+r[3]).toLowerCase().includes(q));if(m.length)h+=`<h4>${n}</h4><div class="grid">${m.map(r=>card(r[0],r[1],r[2].length>3?r[2]:r[3])).join("")}</div>`});
+$("#res").innerHTML=h||"<p class='sub'>نتیجه‌ای پیدا نشد. نام شهر یا غذا را به فارسی یا آلمانی امتحان کنید.</p>";bindTilt()};
+
+// trip planner
+function plan(){const n=Math.max(1,Math.min(14,+$("#days").value||1)),it=$("#int").value;
+let pool=A.filter(a=>it=="all"||a[3]==it);if(pool.length<n)pool=pool.concat(A.filter(a=>!pool.includes(a)));
+const cs=["وین","زالتسبورگ","اینسبروک","هالشتات","گراتس"];
+$("#plan").innerHTML=Array.from({length:n},(_,i)=>{const a=pool[i%pool.length],c=cs[Math.floor(i*cs.length/n)];return `<div class="day" contenteditable="true"><b>روز ${i+1} · ${c}</b><br>${a[0]} — ${a[2]}</div>`}).join("")+"<p class='sub'>هر روز را می‌توانید مستقیم ویرایش کنید. ترتیب شهرها پیشنهادی است و زمان‌های جابه‌جایی را باید جداگانه بررسی کنید.</p>"}
+$("#mk").onclick=plan;$("#pr").onclick=()=>{if(!$("#plan").children.length)plan();print()};plan();
+
+// language (UI chrome only)
+const L={fa:{},en:{n1:"States",n2:"Cities",n3:"Sights",n4:"History",n5:"Food",n6:"Facts",n7:"Trip planner",n8:"Search",h1:"Austria: between history and the future",hp:"From snowy Alpine peaks to Vienna’s opera halls, a country where music, architecture and nature live side by side.",b1:"Discover Austria",b2:"3D journey",t1:"The 9 federal states",s1:"Austria is a federal republic made up of nine states.",t2:"Famous cities",s2:"Touch or hover over the cards.",t3:"Sights",s3:"Ten places often recommended for a visit.",t4:"History: a journey through time",s4:"Scroll to light up each era.",t5:"Traditional food",s5:"Filter by dish type.",t6:"Austria at a glance",s6:"Figures are approximate; sources are listed.",t7:"My dream trip to Austria",s7:"Pick days and interest to build a daily plan.",t8:"Search"},
+de:{n1:"Länder",n2:"Städte",n3:"Sehenswürdigkeiten",n4:"Geschichte",n5:"Essen",n6:"Fakten",n7:"Reiseplaner",n8:"Suche",h1:"Österreich: zwischen Geschichte und Zukunft",hp:"Von verschneiten Alpengipfeln bis zu den Wiener Opernhäusern, ein Land, in dem Musik, Architektur und Natur zusammenleben.",b1:"Österreich entdecken",b2:"3D-Reise",t1:"Die 9 Bundesländer",s1:"Österreich ist eine Bundesrepublik mit neun Ländern.",t2:"Berühmte Städte",s2:"Karten berühren oder überfahren.",t3:"Sehenswürdigkeiten",s3:"Zehn häufig empfohlene Orte.",t4:"Geschichte: eine Zeitreise",s4:"Scrollen, um die Epochen zu beleuchten.",t5:"Traditionelle Küche",s5:"Nach Gerichtart filtern.",t6:"Österreich im Überblick",s6:"Zahlen sind ungefähr; Quellen angegeben.",t7:"Meine Traumreise nach Österreich",s7:"Tage und Interesse wählen, um einen Tagesplan zu erstellen.",t8:"Suche"}};
+const fa0={};document.querySelectorAll("[data-i]").forEach(e=>fa0[e.dataset.i]=e.textContent);
+function setLang(l){const d=l=="fa"?"rtl":"ltr";document.documentElement.lang=l;document.documentElement.dir=d;
+document.querySelectorAll("[data-i]").forEach(e=>e.textContent=(l=="fa"?fa0:L[l])[e.dataset.i]||fa0[e.dataset.i]);
+$("#lang").value=l;try{localStorage.setItem("lang",l)}catch(e){}}
+$("#lang").onchange=e=>setLang(e.target.value);
+try{const l=localStorage.getItem("lang");if(l&&l!="fa")setLang(l)}catch(e){}
+
+// theme, scroll, intro
+$("#theme").onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme=="light"?"dark":"light"};
+const topb=$("#top");topb.onclick=()=>scrollTo({top:0});
+addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;$("#prog").style.width=(scrollY/h*100)+"%";topb.classList.toggle("v",scrollY>600)},{passive:true});
+const intro=$("#intro");function hide(){intro.style.opacity=0;setTimeout(()=>intro.remove(),700)}
+$("#skip").onclick=hide;setTimeout(hide,RM?200:1800);
+
+// WebGL hero
+(function(){const cv=$("#gl");let R;try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:false})}catch(e){return}
+if(!R.getContext())return;
+const lowEnd=(navigator.hardwareConcurrency||4)<4||innerWidth<700;
+R.setPixelRatio(Math.min(devicePixelRatio,lowEnd?1:1.6));
+const sc=new THREE.Scene(),sky=0xbcd6e6;sc.background=new THREE.Color(sky);sc.fog=new THREE.Fog(sky,25,95);
+const cam=new THREE.PerspectiveCamera(55,1,.1,200);cam.position.set(0,9,38);
+sc.add(new THREE.HemisphereLight(0xffffff,0x4a6a52,.85));const sun=new THREE.DirectionalLight(0xfff1d6,1.1);sun.position.set(30,40,20);sc.add(sun);
+const N=lowEnd?70:120,g=new THREE.PlaneGeometry(160,120,N,N);g.rotateX(-Math.PI/2);
+const p=g.attributes.position,col=new Float32Array(p.count*3),c=new THREE.Color();
+for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i);
+let h=Math.sin(x*.07+1)*Math.cos(z*.08)*7+Math.sin(x*.19+z*.13)*2.4+Math.sin(x*.45)*Math.cos(z*.4)*.8;
+const ridge=Math.max(0,1-Math.abs(z+20)/38);h=h*.5+ridge*ridge*22+Math.abs(Math.sin(x*.05))*ridge*8;
+const lake=Math.exp(-(((x-14)**2)/90+((z-14)**2)/60));h-=lake*9;p.setY(i,h);
+if(h<-2.8)c.set(0x3f86a8);else if(h<4)c.set(0x3f6b45);else if(h<12)c.set(0x7c7a70);else c.set(0xf6f9fb);
+col.set([c.r,c.g,c.b],i*3)}
+g.setAttribute("color",new THREE.BufferAttribute(col,3));g.computeVertexNormals();
+sc.add(new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true,flatShading:true})));
+// flag
+const cvs=document.createElement("canvas");cvs.width=96;cvs.height=64;const x=cvs.getContext("2d");x.fillStyle="#ed2939";x.fillRect(0,0,96,64);x.fillStyle="#fff";x.fillRect(0,21,96,22);
+const fg=new THREE.PlaneGeometry(6,4,24,12),fm=new THREE.Mesh(fg,new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cvs),side:THREE.DoubleSide}));
+const pole=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,9),new THREE.MeshLambertMaterial({color:0x888888}));
+const fl=new THREE.Group();fm.position.set(3.1,3.2,0);pole.position.y=0;fl.add(fm,pole);fl.position.set(-10,4.5,22);sc.add(fl);
+// snow
+const SN=lowEnd?300:900,sp=new Float32Array(SN*3);for(let i=0;i<SN;i++){sp[i*3]=(Math.random()-.5)*80;sp[i*3+1]=Math.random()*40;sp[i*3+2]=Math.random()*60-10}
+const sg=new THREE.BufferGeometry();sg.setAttribute("position",new THREE.BufferAttribute(sp,3));
+const snow=new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.22,transparent:true,opacity:.85}));sc.add(snow);
+$("#snow").onclick=e=>{const b=e.currentTarget,on=b.getAttribute("aria-pressed")!="true";b.setAttribute("aria-pressed",on);snow.visible=on};
+let mx=0,my=0;addEventListener("pointermove",e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+function rs(){const w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}rs();addEventListener("resize",rs);
+let vis=true;new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(cv);
+let t0=performance.now();
+function loop(){requestAnimationFrame(loop);if(!vis)return;const t=(performance.now()-t0)/1000,k=RM?0:1;
+const sy=Math.min(scrollY/innerHeight,1.2);
+cam.position.x=mx*6*k;cam.position.y=9+(-my*3)*k-sy*3;cam.position.z=38-sy*16;cam.lookAt(0,8-sy*2,0);
+const fp=fg.attributes.position;for(let i=0;i<fp.count;i++){const px=fp.getX(i);fp.setZ(i,Math.sin(px*1.3-t*3*k)*.35*(px+3)/6)}fp.needsUpdate=true;
+if(snow.visible&&!RM){const a=sg.attributes.position.array;for(let i=0;i<SN;i++){a[i*3+1]-=.04;a[i*3]+=Math.sin(t+i)*.004;if(a[i*3+1]<0)a[i*3+1]=40}sg.attributes.position.needsUpdate=true}
+R.render(sc,cam)}loop();
+})();
+</script>
+</body>
+</html>
