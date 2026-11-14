@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚔️ AFGHAN SMP | دنیای بی‌نهایت ماجراجویی</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Vazirmatn for Persian + Minecraft-style fallback -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+      background: #0b0e14;
+      background-image: radial-gradient(circle at 25% 40%, rgba(30, 130, 200, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 75% 70%, rgba(200, 80, 20, 0.12) 0%, transparent 45%),
+                        repeating-linear-gradient(45deg, #0f131c 0px, #0f131c 2px, #0a0d12 2px, #0a0d12 8px);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #e9f2ff;
+    }
+
+    .card {
+      max-width: 900px;
+      width: 100%;
+      background: rgba(10, 16, 26, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid #3f6b8c;
+      border-radius: 42px;
+      box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.9), 0 0 0 2px rgba(80, 170, 255, 0.2) inset, 0 0 30px rgba(0, 140, 255, 0.3);
+      padding: 40px 30px;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "⚔️";
+      position: absolute;
+      font-size: 220px;
+      opacity: 0.03;
+      top: 10px;
+      right: 10px;
+      transform: rotate(15deg);
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "🇦🇫";
+      position: absolute;
+      font-size: 180px;
+      opacity: 0.03;
+      bottom: -30px;
+      left: -20px;
+      transform: rotate(-10deg);
+      pointer-events: none;
+    }
+
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header h1 {
+      font-size: 3.6rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffd966, #ff9f4b, #ffd966);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px rgba(255, 180, 40, 0.7), 0 0 30px rgba(255, 120, 0, 0.4);
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+
+    .header .subhead {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #b4e0ff;
+      background: rgba(20, 90, 150, 0.3);
+      display: inline-block;
+      padding: 8px 28px;
+      border-radius: 60px;
+      border: 1px solid #3e7ea0;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 20px rgba(0, 180, 255, 0.3);
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    .header .flags {
+      font-size: 1.8rem;
+      margin-top: 12px;
+      filter: drop-shadow(0 0 8px #0077ff);
+    }
+
+    /* Main content grid */
+    .content-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    .left-panel {
+      flex: 1.4;
+      min-width: 260px;
+    }
+
+    .right-panel {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Welcome text */
+    .welcome-box {
+      background: linear-gradient(145deg, #0a1a28, #0d1f2e);
+      border-left: 6px solid #ffb347;
+      border-radius: 20px;
+      padding: 25px 22px;
+      margin-bottom: 25px;
+      box-shadow: 0 15px 25px -10px black, 0 0 0 1px #2a5a78 inset;
+    }
+
+    .welcome-box h2 {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: #ffe484;
+      text-shadow: 0 2px 0 #7a4d00;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .welcome-box .tagline {
+      font-size: 1.1rem;
+      color: #b4dcff;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+
+    .welcome-box .tagline i {
+      color: #ffbc3b;
+      margin-left: 5px;
+    }
+
+    /* Feature list */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 16px;
+      margin-top: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #e0f0ff;
+      font-size: 0.98rem;
+      background: rgba(30, 80, 120, 0.25);
+      padding: 8px 12px;
+      border-radius: 14px;
+      border: 1px solid #2e5e7e;
+      transition: 0.15s;
+      backdrop-filter: blur(2px);
+    }
+
+    .feature-item i {
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+      color: #ffbb4a;
+      text-shadow: 0 0 8px #ff9f00;
+    }
+
+    .feature-item:hover {
+      background: rgba(60, 120, 180, 0.4);
+      border-color: #9ac6ff;
+      transform: translateY(-2px);
+    }
+
+    /* IP / connection card */
+    .server-card {
+      background: #111e2b;
+      border-radius: 28px;
+      padding: 20px 20px 18px;
+      border: 1px solid #2a648b;
+      box-shadow: 0 0 30px rgba(0, 140, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .server-card .label {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #8bb9e0;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .server-card .ip-box {
+      background: #07111c;
+      border-radius: 60px;
+      padding: 14px 8px;
+      font-family: 'Courier New', 'Vazirmatn', monospace;
+      font-weight: 800;
+      font-size: 1.3rem;
+      border: 2px dashed #3b88b0;
+      word-break: break-all;
+      color: #aae0ff;
+      margin: 8px 0 12px;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .server-card .ip-box i {
+      color: #ffc107;
+      margin-left: 10px;
+    }
+
+    .version-badge {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #1e3b4f;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 1px solid #2e84b0;
+      color: #c2e4ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 12px rgba(0, 160, 255, 0.2);
+    }
+
+    .badge i {
+      color: #ffb347;
+    }
+
+    /* CTA Button */
+    .join-btn {
+      background: linear-gradient(145deg, #e68900, #ffb82e);
+      border: none;
+      border-radius: 60px;
+      padding: 18px 20px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #0b141e;
+      text-shadow: 0 1px 0 #ffe49e;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 12px 0 #8f4b00, 0 10px 30px rgba(255, 160, 0, 0.6);
+      transition: 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
+      margin-top: 8px;
+      text-decoration: none;
+      border: 1px solid #ffd966;
+    }
+
+    .join-btn i {
+      font-size: 1.8rem;
+      color: #2d1f00;
+    }
+
+    .join-btn:active {
+      transform: translateY(6px);
+      box-shadow: 0 6px 0 #8f4b00, 0 10px 30px rgba(255, 160, 0, 0.6);
+    }
+
+    .join-btn:hover {
+      background: linear-gradient(145deg, #ffa51e, #ffc44d);
+      box-shadow: 0 12px 0 #8f4b00, 0 0 40px #ffb84d;
+    }
+
+    /* Legend callout */
+    .legend-call {
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 200, 40, 0.08);
+      border-radius: 60px;
+      border: 1px solid #a67c1e;
+      font-weight: 700;
+      color: #ffd966;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      backdrop-filter: blur(5px);
+    }
+
+    .legend-call i {
+      margin: 0 8px;
+      color: #ffb300;
+    }
+
+    /* Footer */
+    .footer-note {
+      margin-top: 30px;
+      text-align: center;
+      color: #6d8fa8;
+      font-size: 0.9rem;
+      border-top: 1px solid #1e3f55;
+      padding-top: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-note i {
+      color: #b57c2e;
+    }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+      .card {
+        padding: 25px 18px;
+      }
+      .header h1 {
+        font-size: 2.6rem;
+      }
+      .features {
+        grid-template-columns: 1fr;
+      }
+      .welcome-box h2 {
+        font-size: 1.6rem;
+      }
+      .server-card .ip-box {
+        font-size: 1rem;
+      }
+      .join-btn {
+        font-size: 1.2rem;
+        padding: 14px 12px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      .header .subhead {
+        font-size: 0.9rem;
+        padding: 6px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>AFGHAN SMP</h1>
+      <div class="subhead">⚡ SURVIVE • BUILD • FIGHT • TRADE ⚡</div>
+      <div class="flags">🇦🇫 ⚔️ 🇦🇫</div>
+    </div>
+
+    <div class="content-grid">
+      <!-- LEFT PANEL: welcome + features -->
+      <div class="left-panel">
+        <div class="welcome-box">
+          <h2><i class="fas fa-fire"></i> WELCOME TO AFGHAN SMP <i class="fas fa-fire"></i></h2>
+          <div class="tagline">
+            🌍 به دنیایی خوش اومدی که فقط قوی‌ترین‌ها توش زنده می‌مونن!
+          </div>
+          <div class="features">
+            <div class="feature-item"><i class="fas fa-skull"></i> گیم‌پلی هیجان‌انگیز Survival</div>
+            <div class="feature-item"><i class="fas fa-castle"></i> ساخت قلمرو و امپراتوری</div>
+            <div class="feature-item"><i class="fas fa-coins"></i> سیستم اقتصاد و خرید/فروش</div>
+            <div class="feature-item"><i class="fas fa-handshake"></i> تشکیل تیم و اتحاد</div>
+            <div class="feature-item"><i class="fas fa-fire"></i> رقابت، جنگ و ماجراجویی</div>
+            <div class="feature-item"><i class="fas fa-shield-halved"></i> کامیونیتی فعال و دوستانه</div>
+          </div>
+        </div>
+        <div class="legend-call">
+          <i class="fas fa-crown"></i> YOUR STORY. YOUR EMPIRE. YOUR LEGEND. <i class="fas fa-crown"></i>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL: server IP & versions & CTA -->
+      <div class="right-panel">
+        <div class="server-card">
+          <div class="label"><i class="fas fa-server"></i> SERVER ADDRESS</div>
+          <div class="ip-box">
+            <i class="fas fa-gamepad"></i> Afghan-SMP.aternos.me:44055
+          </div>
+          <div class="version-badge">
+            <div class="badge"><i class="fab fa-java"></i> Java 1.21.11</div>
+            <div class="badge"><i class="fas fa-microchip"></i> 1.21.11</div>
+          </div>
+        </div>
+
+        <!-- JOIN BUTTON (copy IP) -->
+        <button class="join-btn" id="joinBtn" onclick="copyIP()">
+          <i class="fas fa-play"></i> JOIN THE ADVENTURE <i class="fas fa-arrow-right"></i>
+        </button>
+        <div style="font-size: 0.85rem; text-align: center; color: #7fa5c2; margin-top: 8px;">
+          <i class="fas fa-copy"></i> کلیک کن تا IP کپی بشه
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <i class="fas fa-dragon"></i> AFGHAN SMP — Where Legends Are Born! <i class="fas fa-dragon"></i><br>
+      <span style="font-size:0.8rem;">🚀 Join The Adventure & Make Your Name Legendary! 🚀</span>
+    </div>
+  </div>
+
+  <script>
+    function copyIP() {
+      const ipText = "Afghan-SMP.aternos.me:44055";
+      navigator.clipboard.writeText(ipText).then(() => {
+        // Give feedback on button
+        const btn = document.getElementById('joinBtn');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> IP COPIED! <i class="fas fa-check-circle"></i>';
+        btn.style.background = 'linear-gradient(145deg, #2e8b57, #3cb371)';
+        btn.style.color = 'white';
+        btn.style.textShadow = '0 1px 0 #1a4d2e';
+        btn.style.boxShadow = '0 12px 0 #1a4d2e, 0 0 40px #2e8b57';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.background = 'linear-gradient(145deg, #e68900, #ffb82e)';
+          btn.style.color = '#0b141e';
+          btn.style.textShadow = '0 1px 0 #ffe49e';
+          btn.style.boxShadow = '0 12px 0 #8f4b00, 0 10px 30px rgba(255, 160, 0, 0.6)';
+        }, 1800);
+      }).catch(err => {
+        // Fallback for older browsers
+        alert("IP: Afghan-SMP.aternos.me:44055 (کپی دستی)");
+      });
+    }
+  </script>
+</body>
+</html>
